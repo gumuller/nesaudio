@@ -1,0 +1,3 @@
+"""
+Preset NES sound effects
+"""

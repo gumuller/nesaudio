@@ -1,0 +1,81 @@
+# Bach - Prelude in C Major (BWV 846)
+# Famous arpeggiated pattern from The Well-Tempered Clavier
+title: "Prelude in C Major"
+composer: "Johann Sebastian Bach"
+tempo: 80
+time_signature: "4/4"
+
+channels:
+  pulse1:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.7
+    notes:
+      # Measure 1: C-E-G-C-E-G-C-E
+      - {time: 0.0, pitch: "C4", duration: 0.3}
+      - {time: 0.3, pitch: "E4", duration: 0.3}
+      - {time: 0.6, pitch: "G4", duration: 0.3}
+      - {time: 0.9, pitch: "C5", duration: 0.3}
+      - {time: 1.2, pitch: "E5", duration: 0.3}
+      - {time: 1.5, pitch: "G4", duration: 0.3}
+      - {time: 1.8, pitch: "C5", duration: 0.3}
+      - {time: 2.1, pitch: "E5", duration: 0.3}
+
+      # Measure 2: D-F-A-D-F-A-D-F
+      - {time: 2.4, pitch: "D4", duration: 0.3}
+      - {time: 2.7, pitch: "F4", duration: 0.3}
+      - {time: 3.0, pitch: "A4", duration: 0.3}
+      - {time: 3.3, pitch: "D5", duration: 0.3}
+      - {time: 3.6, pitch: "F5", duration: 0.3}
+      - {time: 3.9, pitch: "A4", duration: 0.3}
+      - {time: 4.2, pitch: "D5", duration: 0.3}
+      - {time: 4.5, pitch: "F5", duration: 0.3}
+
+      # Measure 3: G-D-G-B-D-G-B-D
+      - {time: 4.8, pitch: "G3", duration: 0.3}
+      - {time: 5.1, pitch: "D4", duration: 0.3}
+      - {time: 5.4, pitch: "G4", duration: 0.3}
+      - {time: 5.7, pitch: "B4", duration: 0.3}
+      - {time: 6.0, pitch: "D5", duration: 0.3}
+      - {time: 6.3, pitch: "G4", duration: 0.3}
+      - {time: 6.6, pitch: "B4", duration: 0.3}
+      - {time: 6.9, pitch: "D5", duration: 0.3}
+
+      # Measure 4: C-E-G-C-E-G-C-E (return)
+      - {time: 7.2, pitch: "C4", duration: 0.3}
+      - {time: 7.5, pitch: "E4", duration: 0.3}
+      - {time: 7.8, pitch: "G4", duration: 0.3}
+      - {time: 8.1, pitch: "C5", duration: 0.3}
+      - {time: 8.4, pitch: "E5", duration: 0.3}
+      - {time: 8.7, pitch: "G4", duration: 0.3}
+      - {time: 9.0, pitch: "C5", duration: 0.3}
+      - {time: 9.3, pitch: "E5", duration: 0.3}
+
+  pulse2:
+    enabled: true
+    duty_cycle: 0.25
+    volume: 0.5
+    notes:
+      # Harmony part (following the arpeggio pattern)
+      - {time: 0.3, pitch: "G4", duration: 0.3}
+      - {time: 0.9, pitch: "E5", duration: 0.3}
+      - {time: 1.5, pitch: "C5", duration: 0.3}
+      - {time: 2.4, pitch: "F4", duration: 0.3}
+      - {time: 3.0, pitch: "D5", duration: 0.3}
+      - {time: 3.6, pitch: "A4", duration: 0.3}
+      - {time: 4.8, pitch: "D4", duration: 0.3}
+      - {time: 5.4, pitch: "B4", duration: 0.3}
+      - {time: 6.0, pitch: "G4", duration: 0.3}
+      - {time: 7.2, pitch: "E4", duration: 0.3}
+      - {time: 7.8, pitch: "C5", duration: 0.3}
+      - {time: 8.4, pitch: "G4", duration: 0.3}
+
+  triangle:
+    enabled: true
+    volume: 0.65
+    notes:
+      # Bass line (root notes)
+      - {time: 0.0, pitch: "C2", duration: 2.4}
+      - {time: 2.4, pitch: "D2", duration: 2.4}
+      - {time: 4.8, pitch: "G2", duration: 2.4}
+      - {time: 7.2, pitch: "C2", duration: 2.4}

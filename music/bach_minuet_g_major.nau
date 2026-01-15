@@ -1,0 +1,87 @@
+# Bach - Minuet in G Major
+# Simple, elegant dance piece
+title: "Minuet in G Major"
+composer: "Johann Sebastian Bach"
+tempo: 120
+time_signature: "3/4"
+
+channels:
+  pulse1:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.75
+    notes:
+      # Opening phrase: D5-G4-A4-B4-C5
+      - {time: 0.0, pitch: "D5", duration: 0.5}
+      - {time: 0.5, pitch: "G4", duration: 0.25}
+      - {time: 0.75, pitch: "A4", duration: 0.25}
+      - {time: 1.0, pitch: "B4", duration: 0.5}
+      - {time: 1.5, pitch: "C5", duration: 0.5}
+
+      # Second measure: D5-G4-G4
+      - {time: 2.0, pitch: "D5", duration: 1.0}
+      - {time: 3.0, pitch: "G4", duration: 0.5}
+      - {time: 3.5, pitch: "G4", duration: 0.5}
+
+      # Third measure: E5-C5-D5-E5-F#5
+      - {time: 4.0, pitch: "E5", duration: 0.5}
+      - {time: 4.5, pitch: "C5", duration: 0.25}
+      - {time: 4.75, pitch: "D5", duration: 0.25}
+      - {time: 5.0, pitch: "E5", duration: 0.5}
+      - {time: 5.5, pitch: "F#5", duration: 0.5}
+
+      # Fourth measure: G5-G4-G4
+      - {time: 6.0, pitch: "G5", duration: 1.0}
+      - {time: 7.0, pitch: "G4", duration: 0.5}
+      - {time: 7.5, pitch: "G4", duration: 0.5}
+
+      # Repeat beginning
+      - {time: 8.0, pitch: "D5", duration: 0.5}
+      - {time: 8.5, pitch: "G4", duration: 0.25}
+      - {time: 8.75, pitch: "A4", duration: 0.25}
+      - {time: 9.0, pitch: "B4", duration: 0.5}
+      - {time: 9.5, pitch: "C5", duration: 0.5}
+      - {time: 10.0, pitch: "D5", duration: 1.5}
+
+  pulse2:
+    enabled: true
+    duty_cycle: 0.25
+    volume: 0.55
+    notes:
+      # Harmony part
+      - {time: 0.0, pitch: "B4", duration: 0.5}
+      - {time: 1.0, pitch: "G4", duration: 0.5}
+      - {time: 2.0, pitch: "B4", duration: 1.0}
+      - {time: 4.0, pitch: "C5", duration: 0.5}
+      - {time: 5.0, pitch: "C5", duration: 0.5}
+      - {time: 6.0, pitch: "D5", duration: 1.0}
+      - {time: 8.0, pitch: "B4", duration: 0.5}
+      - {time: 9.0, pitch: "G4", duration: 0.5}
+      - {time: 10.0, pitch: "B4", duration: 1.5}
+
+  triangle:
+    enabled: true
+    volume: 0.7
+    notes:
+      # Bass line (dancing bass)
+      - {time: 0.0, pitch: "G2", duration: 0.5}
+      - {time: 0.5, pitch: "D3", duration: 0.5}
+      - {time: 1.0, pitch: "B2", duration: 0.5}
+      - {time: 1.5, pitch: "D3", duration: 0.5}
+      - {time: 2.0, pitch: "G2", duration: 0.5}
+      - {time: 2.5, pitch: "D3", duration: 0.5}
+      - {time: 3.0, pitch: "B2", duration: 0.5}
+      - {time: 3.5, pitch: "D3", duration: 0.5}
+      - {time: 4.0, pitch: "C3", duration: 0.5}
+      - {time: 4.5, pitch: "G2", duration: 0.5}
+      - {time: 5.0, pitch: "C3", duration: 0.5}
+      - {time: 5.5, pitch: "D3", duration: 0.5}
+      - {time: 6.0, pitch: "G2", duration: 0.5}
+      - {time: 6.5, pitch: "D3", duration: 0.5}
+      - {time: 7.0, pitch: "B2", duration: 0.5}
+      - {time: 7.5, pitch: "D3", duration: 0.5}
+      - {time: 8.0, pitch: "G2", duration: 0.5}
+      - {time: 8.5, pitch: "D3", duration: 0.5}
+      - {time: 9.0, pitch: "B2", duration: 0.5}
+      - {time: 9.5, pitch: "D3", duration: 0.5}
+      - {time: 10.0, pitch: "G2", duration: 1.5}

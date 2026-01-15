@@ -1,0 +1,102 @@
+# Mozart - Eine Kleine Nachtmusik (Allegro, 1st movement opening)
+# Iconic opening theme
+title: "Eine Kleine Nachtmusik"
+composer: "Wolfgang Amadeus Mozart"
+tempo: 140
+time_signature: "4/4"
+
+channels:
+  pulse1:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.8
+    notes:
+      # Famous opening: G-D-G-D | G-D-G
+      - {time: 0.0, pitch: "G4", duration: 0.25}
+      - {time: 0.3, pitch: "D5", duration: 0.15}
+      - {time: 0.45, pitch: "REST", duration: 0.05}
+      - {time: 0.5, pitch: "G4", duration: 0.25}
+      - {time: 0.8, pitch: "D5", duration: 0.15}
+      - {time: 0.95, pitch: "REST", duration: 0.05}
+
+      - {time: 1.0, pitch: "G4", duration: 0.25}
+      - {time: 1.3, pitch: "D5", duration: 0.15}
+      - {time: 1.45, pitch: "REST", duration: 0.05}
+      - {time: 1.5, pitch: "G4", duration: 0.5}
+
+      # Scalar passage: B-C-D
+      - {time: 2.0, pitch: "B4", duration: 0.25}
+      - {time: 2.25, pitch: "C5", duration: 0.25}
+      - {time: 2.5, pitch: "D5", duration: 0.5}
+
+      # Repeat pattern
+      - {time: 3.0, pitch: "G4", duration: 0.25}
+      - {time: 3.3, pitch: "D5", duration: 0.15}
+      - {time: 3.5, pitch: "G4", duration: 0.25}
+      - {time: 3.8, pitch: "D5", duration: 0.15}
+
+      # Resolution
+      - {time: 4.0, pitch: "G5", duration: 1.0}
+
+      # Second phrase: D-E-C-D-E
+      - {time: 5.0, pitch: "D5", duration: 0.3}
+      - {time: 5.3, pitch: "E5", duration: 0.2}
+      - {time: 5.5, pitch: "C5", duration: 0.3}
+      - {time: 5.8, pitch: "D5", duration: 0.2}
+      - {time: 6.0, pitch: "E5", duration: 0.5}
+
+      # Final phrase
+      - {time: 6.5, pitch: "D5", duration: 0.3}
+      - {time: 6.8, pitch: "C5", duration: 0.2}
+      - {time: 7.0, pitch: "B4", duration: 0.5}
+      - {time: 7.5, pitch: "A4", duration: 0.5}
+      - {time: 8.0, pitch: "G4", duration: 1.0}
+
+  pulse2:
+    enabled: true
+    duty_cycle: 0.25
+    volume: 0.6
+    notes:
+      # Harmony - playing thirds below
+      - {time: 0.0, pitch: "G3", duration: 0.25}
+      - {time: 0.3, pitch: "B4", duration: 0.15}
+      - {time: 0.5, pitch: "G3", duration: 0.25}
+      - {time: 0.8, pitch: "B4", duration: 0.15}
+      - {time: 1.0, pitch: "G3", duration: 0.25}
+      - {time: 1.3, pitch: "B4", duration: 0.15}
+      - {time: 1.5, pitch: "D4", duration: 0.5}
+      - {time: 2.0, pitch: "G4", duration: 0.25}
+      - {time: 2.25, pitch: "A4", duration: 0.25}
+      - {time: 2.5, pitch: "B4", duration: 0.5}
+      - {time: 3.0, pitch: "D4", duration: 0.5}
+      - {time: 3.5, pitch: "D4", duration: 0.5}
+      - {time: 4.0, pitch: "G4", duration: 1.0}
+      - {time: 5.0, pitch: "B4", duration: 0.5}
+      - {time: 5.5, pitch: "A4", duration: 0.5}
+      - {time: 6.0, pitch: "C5", duration: 0.5}
+      - {time: 6.5, pitch: "B4", duration: 0.5}
+      - {time: 7.0, pitch: "G4", duration: 0.5}
+      - {time: 7.5, pitch: "F#4", duration: 0.5}
+      - {time: 8.0, pitch: "G4", duration: 1.0}
+
+  triangle:
+    enabled: true
+    volume: 0.7
+    notes:
+      # Bass line (quarter notes on strong beats)
+      - {time: 0.0, pitch: "G2", duration: 0.5}
+      - {time: 0.5, pitch: "G2", duration: 0.5}
+      - {time: 1.0, pitch: "G2", duration: 0.5}
+      - {time: 1.5, pitch: "G2", duration: 0.5}
+      - {time: 2.0, pitch: "G2", duration: 0.5}
+      - {time: 2.5, pitch: "D3", duration: 0.5}
+      - {time: 3.0, pitch: "G2", duration: 0.5}
+      - {time: 3.5, pitch: "B2", duration: 0.5}
+      - {time: 4.0, pitch: "G2", duration: 1.0}
+      - {time: 5.0, pitch: "D3", duration: 0.5}
+      - {time: 5.5, pitch: "C3", duration: 0.5}
+      - {time: 6.0, pitch: "E3", duration: 0.5}
+      - {time: 6.5, pitch: "D3", duration: 0.5}
+      - {time: 7.0, pitch: "G2", duration: 0.5}
+      - {time: 7.5, pitch: "D3", duration: 0.5}
+      - {time: 8.0, pitch: "G2", duration: 1.0}

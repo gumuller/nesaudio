@@ -1,0 +1,45 @@
+"""
+Configuration constants for NESAUDIO
+"""
+
+# Audio settings
+SAMPLE_RATE = 44100
+BUFFER_SIZE = 512
+OUTPUT_CHANNELS = 1  # Mono
+
+# NES specifications
+NES_PULSE_DUTY_CYCLES = [0.125, 0.25, 0.5, 0.75]
+NES_VOLUME_LEVELS = 16  # 4-bit
+NES_PULSE_FREQ_MIN = 54.6  # Hz
+NES_PULSE_FREQ_MAX = 12400  # Hz
+NES_TRIANGLE_FREQ_MIN = 27.3
+NES_TRIANGLE_FREQ_MAX = 55900
+NES_NOISE_PERIODS = 16
+
+# UI settings
+UI_MIN_WIDTH = 80
+UI_MIN_HEIGHT = 24
+UI_UPDATE_FPS = 30
+
+# Spectrum analyzer
+SPECTRUM_FFT_SIZE = 1024
+SPECTRUM_BINS = 32
+
+# Recording
+RECORDING_FORMAT = "WAV"
+RECORDING_BIT_DEPTH = 16
+
+# File paths
+MUSIC_DIR = "music"
+PRESET_DIR = "nesaudio/presets"
+RECORDING_DIR = "recordings"
+
+# Color scheme (NES palette-inspired)
+COLOR_BG = "#0f0f0f"
+COLOR_FG = "#ffffff"
+COLOR_ACCENT = "#f83800"
+COLOR_PULSE1 = "#00d8f8"
+COLOR_PULSE2 = "#58f898"
+COLOR_TRIANGLE = "#f8b800"
+COLOR_NOISE = "#f878f8"
+COLOR_DMC = "#f85898"

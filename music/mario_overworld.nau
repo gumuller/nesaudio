@@ -1,0 +1,132 @@
+# Super Mario Bros - Overworld Theme
+# Iconic theme by Koji Kondo
+title: "Super Mario Bros - Overworld Theme"
+composer: "Koji Kondo"
+tempo: 180
+time_signature: "4/4"
+
+channels:
+  pulse1:
+    enabled: true
+    duty_cycle: 0.125
+    volume: 0.8
+    notes:
+      # Opening: E-E-REST-E-REST-C-E-REST-G
+      - {time: 0.0, pitch: "E5", duration: 0.15}
+      - {time: 0.2, pitch: "E5", duration: 0.15}
+      - {time: 0.45, pitch: "E5", duration: 0.15}
+      - {time: 0.75, pitch: "C5", duration: 0.15}
+      - {time: 0.9, pitch: "E5", duration: 0.3}
+      - {time: 1.3, pitch: "G5", duration: 0.6}
+      - {time: 2.2, pitch: "G4", duration: 0.6}
+
+      # Second phrase: C-G-E
+      - {time: 3.0, pitch: "C5", duration: 0.4}
+      - {time: 3.6, pitch: "G4", duration: 0.4}
+      - {time: 4.2, pitch: "E4", duration: 0.4}
+
+      # A-B-A#-A
+      - {time: 4.8, pitch: "A4", duration: 0.3}
+      - {time: 5.1, pitch: "B4", duration: 0.3}
+      - {time: 5.4, pitch: "A#4", duration: 0.2}
+      - {time: 5.6, pitch: "A4", duration: 0.3}
+
+      # Third phrase: G-E-G-A-F-G
+      - {time: 6.0, pitch: "G4", duration: 0.25}
+      - {time: 6.25, pitch: "E5", duration: 0.25}
+      - {time: 6.5, pitch: "G5", duration: 0.25}
+      - {time: 6.75, pitch: "A5", duration: 0.3}
+      - {time: 7.1, pitch: "F5", duration: 0.2}
+      - {time: 7.3, pitch: "G5", duration: 0.3}
+
+      # E-C-D-B
+      - {time: 7.7, pitch: "E5", duration: 0.3}
+      - {time: 8.0, pitch: "C5", duration: 0.2}
+      - {time: 8.2, pitch: "D5", duration: 0.2}
+      - {time: 8.4, pitch: "B4", duration: 0.6}
+
+  pulse2:
+    enabled: true
+    duty_cycle: 0.125
+    volume: 0.5
+    notes:
+      # Harmony (staccato chords)
+      - {time: 0.0, pitch: "F#4", duration: 0.15}
+      - {time: 0.2, pitch: "F#4", duration: 0.15}
+      - {time: 0.45, pitch: "F#4", duration: 0.15}
+      - {time: 0.75, pitch: "F#4", duration: 0.15}
+      - {time: 0.9, pitch: "F#4", duration: 0.3}
+      - {time: 1.3, pitch: "B4", duration: 0.6}
+      - {time: 2.2, pitch: "E4", duration: 0.6}
+      - {time: 3.0, pitch: "G4", duration: 0.4}
+      - {time: 3.6, pitch: "E4", duration: 0.4}
+      - {time: 4.2, pitch: "C4", duration: 0.4}
+      - {time: 4.8, pitch: "F4", duration: 0.3}
+      - {time: 5.1, pitch: "G4", duration: 0.3}
+      - {time: 5.4, pitch: "F#4", duration: 0.2}
+      - {time: 5.6, pitch: "F4", duration: 0.3}
+      - {time: 6.0, pitch: "E4", duration: 0.25}
+      - {time: 6.25, pitch: "C5", duration: 0.25}
+      - {time: 6.5, pitch: "E5", duration: 0.25}
+      - {time: 6.75, pitch: "F5", duration: 0.3}
+      - {time: 7.1, pitch: "D5", duration: 0.2}
+      - {time: 7.3, pitch: "E5", duration: 0.3}
+      - {time: 7.7, pitch: "C5", duration: 0.3}
+      - {time: 8.0, pitch: "A4", duration: 0.2}
+      - {time: 8.2, pitch: "B4", duration: 0.2}
+      - {time: 8.4, pitch: "G4", duration: 0.6}
+
+  triangle:
+    enabled: true
+    volume: 0.75
+    notes:
+      # Bouncy bass line
+      - {time: 0.0, pitch: "D3", duration: 0.3}
+      - {time: 0.3, pitch: "D2", duration: 0.3}
+      - {time: 0.6, pitch: "D3", duration: 0.3}
+      - {time: 0.9, pitch: "D2", duration: 0.3}
+      - {time: 1.3, pitch: "G3", duration: 0.3}
+      - {time: 1.6, pitch: "G2", duration: 0.3}
+      - {time: 2.2, pitch: "G2", duration: 0.6}
+      - {time: 3.0, pitch: "C3", duration: 0.3}
+      - {time: 3.3, pitch: "C2", duration: 0.3}
+      - {time: 3.6, pitch: "G2", duration: 0.3}
+      - {time: 3.9, pitch: "G3", duration: 0.3}
+      - {time: 4.2, pitch: "C3", duration: 0.3}
+      - {time: 4.5, pitch: "C2", duration: 0.3}
+      - {time: 4.8, pitch: "F2", duration: 0.3}
+      - {time: 5.1, pitch: "F3", duration: 0.3}
+      - {time: 5.4, pitch: "F2", duration: 0.3}
+      - {time: 5.7, pitch: "F3", duration: 0.3}
+      - {time: 6.0, pitch: "C3", duration: 0.3}
+      - {time: 6.3, pitch: "C2", duration: 0.3}
+      - {time: 6.6, pitch: "C3", duration: 0.3}
+      - {time: 6.9, pitch: "F3", duration: 0.3}
+      - {time: 7.2, pitch: "F2", duration: 0.3}
+      - {time: 7.5, pitch: "F3", duration: 0.3}
+      - {time: 7.8, pitch: "C3", duration: 0.2}
+      - {time: 8.0, pitch: "A2", duration: 0.2}
+      - {time: 8.2, pitch: "B2", duration: 0.2}
+      - {time: 8.4, pitch: "G2", duration: 0.6}
+
+  noise:
+    enabled: true
+    volume: 0.25
+    mode: "random"
+    notes:
+      # Percussion on beats
+      - {time: 0.0, period: 3, duration: 0.05}
+      - {time: 0.6, period: 3, duration: 0.05}
+      - {time: 1.2, period: 3, duration: 0.05}
+      - {time: 1.8, period: 3, duration: 0.05}
+      - {time: 2.4, period: 3, duration: 0.05}
+      - {time: 3.0, period: 3, duration: 0.05}
+      - {time: 3.6, period: 3, duration: 0.05}
+      - {time: 4.2, period: 3, duration: 0.05}
+      - {time: 4.8, period: 3, duration: 0.05}
+      - {time: 5.4, period: 3, duration: 0.05}
+      - {time: 6.0, period: 3, duration: 0.05}
+      - {time: 6.6, period: 3, duration: 0.05}
+      - {time: 7.2, period: 3, duration: 0.05}
+      - {time: 7.8, period: 3, duration: 0.05}
+      - {time: 8.4, period: 3, duration: 0.05}
