@@ -45,7 +45,7 @@ class ChannelControlWidget(Widget):
         status = "●" if self.is_active else "○"
         lines.append(f"Status: {status}")
 
-        return Text("\n".join(lines))
+        return Text.from_markup("\n".join(lines))
 
     def update_state(self, frequency: float, volume: float, duty_cycle: float, is_active: bool):
         """Update channel state"""

@@ -52,7 +52,7 @@ class KeyboardWidget(Widget):
         lines.append("│ F1-F6: Sound Effects │  R: Record  │  Q: Quit│")
         lines.append("└─────────────────────────────────────────────┘")
 
-        return Text("\n".join(lines))
+        return Text.from_markup("\n".join(lines))
 
     def press_key(self, key: str):
         """Mark a key as pressed"""

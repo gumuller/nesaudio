@@ -56,7 +56,8 @@ class NESAudioApp(App):
     }
 
     #spectrum-container {
-        height: 12;
+        height: 1fr;
+        min-height: 14;
         border: solid green;
         padding: 1;
         margin-bottom: 1;
@@ -83,7 +84,7 @@ class NESAudioApp(App):
     }
 
     ChannelControlWidget {
-        height: 8;
+        height: 9;
     }
     """
 
@@ -213,16 +214,30 @@ class NESAudioApp(App):
             rec_status = " [●REC]" if self.is_recording else ""
             self.info_label.update(f"{message}{rec_status}")
 
-    async def on_key(self, event: events.Key) -> None:
+    def on_key(self, event: events.Key) -> None:
         """Handle key presses"""
         key = event.key.lower()
 
         # Check if it's a musical key
         if key in KEY_TO_NOTE:
-            await self.play_note(key)
-        elif key in ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'w', 'e', 't', 'y', 'u', 'o', 'p']:
-            # Already handled above
-            pass
+            self.play_note(key)
+
+    def on_key_up(self, event: events.Key) -> None:
+        """Handle key releases - stop notes when keys are released"""
+        key = event.key.lower()
+
+        if key in self.pressed_keys:
+            del self.pressed_keys[key]
+
+            if self.keyboard_widget:
+                self.keyboard_widget.release_key(key)
+
+            # Only note_off if no other musical keys are held
+            if not any(k in KEY_TO_NOTE for k in self.pressed_keys):
+                if self.audio_engine:
+                    channel = self.audio_engine.channels.get_channel(self.current_channel)
+                    if channel and hasattr(channel, 'note_off'):
+                        channel.note_off()
 
     def play_note(self, key: str):
         """Play a note based on key press"""

@@ -74,13 +74,15 @@ class SpectrumAnalyzer:
                 # Take maximum in each bin for better peak visibility
                 binned[i] = np.max(spectrum_data[start:end])
 
-        # Normalize to 0-1 range with logarithmic scaling
-        if np.max(binned) > 0:
-            binned = binned / np.max(binned)
+        # Use fixed reference level so quiet signals don't appear at full scale.
+        # The FFT magnitude for a full-scale sine at this fft_size is ~fft_size/2.
+        ref_level = self.fft_size / 4.0  # conservative reference
+        binned = binned / ref_level
 
         # Apply logarithmic scaling for better visualization of quiet sounds
-        binned = np.log10(binned + 1e-6) + 6  # +6 to make range 0-6
-        binned = np.clip(binned / 6.0, 0, 1)  # Normalize to 0-1
+        # dB-like: 60 dB dynamic range mapped to 0-1
+        binned = np.log10(np.maximum(binned, 1e-6))  # log10 of ratio
+        binned = np.clip((binned + 3) / 3.0, 0, 1)   # map [-3, 0] -> [0, 1]  (60 dB range)
 
         return binned
 
