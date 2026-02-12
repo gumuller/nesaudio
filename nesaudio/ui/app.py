@@ -111,16 +111,17 @@ class NESAudioApp(App):
     current_channel = reactive("pulse1")
     is_recording = reactive(False)
 
-    # How long after last key-repeat to consider the key released (seconds).
-    # Terminal key repeat is typically every ~30-50ms, so 150ms gap means released.
+    # After key-repeat is active, gap before considering the key released.
     NOTE_OFF_TIMEOUT = 0.15
+    # Initial press timeout — must exceed the OS key-repeat delay (~300-500ms).
+    NOTE_OFF_INITIAL_TIMEOUT = 0.6
 
     def __init__(self):
         super().__init__()
         self.audio_engine = None
         self.music_player = None
         self.preset_manager = None
-        self.pressed_keys = {}       # key -> timestamp of last press/repeat
+        self.pressed_keys = {}       # key -> (last_timestamp, press_count)
         self._note_off_timer = None  # Textual timer for checking release
 
         # Widgets
@@ -249,8 +250,9 @@ class NESAudioApp(App):
         if channel and hasattr(channel, 'set_frequency'):
             channel.set_frequency(frequency)
 
-            # Record this key press timestamp (for release detection)
-            self.pressed_keys[key] = time.monotonic()
+            # Record this key press timestamp and count (for release detection)
+            _, prev_count = self.pressed_keys.get(key, (0, 0))
+            self.pressed_keys[key] = (time.monotonic(), prev_count + 1)
 
             # Start the note-off checker if not already running
             if self._note_off_timer is None:
@@ -267,10 +269,12 @@ class NESAudioApp(App):
     def _check_note_off(self):
         """Periodically check if held keys have stopped repeating (i.e. released)."""
         now = time.monotonic()
-        released = [
-            key for key, last_time in self.pressed_keys.items()
-            if now - last_time > self.NOTE_OFF_TIMEOUT
-        ]
+        released = []
+        for key, (last_time, count) in self.pressed_keys.items():
+            # Use longer timeout until key-repeat has started (count > 1)
+            timeout = self.NOTE_OFF_TIMEOUT if count > 1 else self.NOTE_OFF_INITIAL_TIMEOUT
+            if now - last_time > timeout:
+                released.append(key)
 
         for key in released:
             del self.pressed_keys[key]
