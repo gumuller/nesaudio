@@ -2,6 +2,8 @@
 Main Textual application for NESAUDIO
 """
 
+import time
+
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal, Vertical
 from textual.widgets import Header, Footer, Static, Label
@@ -109,12 +111,17 @@ class NESAudioApp(App):
     current_channel = reactive("pulse1")
     is_recording = reactive(False)
 
+    # How long after last key-repeat to consider the key released (seconds).
+    # Terminal key repeat is typically every ~30-50ms, so 150ms gap means released.
+    NOTE_OFF_TIMEOUT = 0.15
+
     def __init__(self):
         super().__init__()
         self.audio_engine = None
         self.music_player = None
         self.preset_manager = None
-        self.pressed_keys = {}
+        self.pressed_keys = {}       # key -> timestamp of last press/repeat
+        self._note_off_timer = None  # Textual timer for checking release
 
         # Widgets
         self.spectrum_widget = None
@@ -222,23 +229,6 @@ class NESAudioApp(App):
         if key in KEY_TO_NOTE:
             self.play_note(key)
 
-    def on_key_up(self, event: events.Key) -> None:
-        """Handle key releases - stop notes when keys are released"""
-        key = event.key.lower()
-
-        if key in self.pressed_keys:
-            del self.pressed_keys[key]
-
-            if self.keyboard_widget:
-                self.keyboard_widget.release_key(key)
-
-            # Only note_off if no other musical keys are held
-            if not any(k in KEY_TO_NOTE for k in self.pressed_keys):
-                if self.audio_engine:
-                    channel = self.audio_engine.channels.get_channel(self.current_channel)
-                    if channel and hasattr(channel, 'note_off'):
-                        channel.note_off()
-
     def play_note(self, key: str):
         """Play a note based on key press"""
         if key not in KEY_TO_NOTE:
@@ -258,13 +248,46 @@ class NESAudioApp(App):
         channel = self.audio_engine.channels.get_channel(self.current_channel)
         if channel and hasattr(channel, 'set_frequency'):
             channel.set_frequency(frequency)
-            self.pressed_keys[key] = True
+
+            # Record this key press timestamp (for release detection)
+            self.pressed_keys[key] = time.monotonic()
+
+            # Start the note-off checker if not already running
+            if self._note_off_timer is None:
+                self._note_off_timer = self.set_interval(
+                    self.NOTE_OFF_TIMEOUT / 2, self._check_note_off
+                )
 
             # Update keyboard widget
             if self.keyboard_widget:
                 self.keyboard_widget.press_key(key)
 
             self.update_info(f"Playing: {pitch} ({frequency:.1f} Hz) on {self.current_channel.upper()} | Oct: {self.current_octave}")
+
+    def _check_note_off(self):
+        """Periodically check if held keys have stopped repeating (i.e. released)."""
+        now = time.monotonic()
+        released = [
+            key for key, last_time in self.pressed_keys.items()
+            if now - last_time > self.NOTE_OFF_TIMEOUT
+        ]
+
+        for key in released:
+            del self.pressed_keys[key]
+            if self.keyboard_widget:
+                self.keyboard_widget.release_key(key)
+
+        # If all musical keys released, note off on the channel
+        if released and not self.pressed_keys:
+            if self.audio_engine:
+                channel = self.audio_engine.channels.get_channel(self.current_channel)
+                if channel and hasattr(channel, 'note_off'):
+                    channel.note_off()
+
+        # Stop the timer when no keys are tracked
+        if not self.pressed_keys and self._note_off_timer is not None:
+            self._note_off_timer.stop()
+            self._note_off_timer = None
 
     def action_octave_down(self):
         """Decrease octave"""
