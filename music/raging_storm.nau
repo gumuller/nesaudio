@@ -1,0 +1,144 @@
+# Raging Storm - Thrash Metal
+title: "Raging Storm"
+composer: "NES Metal"
+tempo: 190
+time_signature: "4/4"
+
+channels:
+  pulse1:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.9
+    notes:
+      - {time: 0.0, pitch: "F#4", duration: 0.07}
+      - {time: 0.08, pitch: "F#4", duration: 0.07}
+      - {time: 0.16, pitch: "F#4", duration: 0.07}
+      - {time: 0.24, pitch: "G4", duration: 0.07}
+      - {time: 0.32, pitch: "G4", duration: 0.07}
+      - {time: 0.4, pitch: "G4", duration: 0.07}
+      - {time: 0.48, pitch: "A4", duration: 0.15}
+      - {time: 0.66, pitch: "G4", duration: 0.1}
+      - {time: 0.8, pitch: "F#4", duration: 0.15}
+      - {time: 1.0, pitch: "E4", duration: 0.07}
+      - {time: 1.08, pitch: "E4", duration: 0.07}
+      - {time: 1.16, pitch: "E4", duration: 0.07}
+      - {time: 1.24, pitch: "F#4", duration: 0.07}
+      - {time: 1.32, pitch: "F#4", duration: 0.07}
+      - {time: 1.4, pitch: "F#4", duration: 0.07}
+      - {time: 1.48, pitch: "G4", duration: 0.15}
+      - {time: 1.66, pitch: "F#4", duration: 0.1}
+      - {time: 1.8, pitch: "E4", duration: 0.15}
+      - {time: 2.0, pitch: "A4", duration: 0.07}
+      - {time: 2.08, pitch: "B4", duration: 0.07}
+      - {time: 2.16, pitch: "C5", duration: 0.07}
+      - {time: 2.24, pitch: "D5", duration: 0.07}
+      - {time: 2.32, pitch: "E5", duration: 0.15}
+      - {time: 2.5, pitch: "D5", duration: 0.1}
+      - {time: 2.64, pitch: "C5", duration: 0.1}
+      - {time: 2.78, pitch: "B4", duration: 0.1}
+      - {time: 2.92, pitch: "A4", duration: 0.2}
+      - {time: 3.2, pitch: "G4", duration: 0.1}
+      - {time: 3.35, pitch: "F#4", duration: 0.1}
+      - {time: 3.5, pitch: "E4", duration: 0.25}
+
+  pulse2:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.7
+    notes:
+      - {time: 0.0, pitch: "C#4", duration: 0.07}
+      - {time: 0.08, pitch: "C#4", duration: 0.07}
+      - {time: 0.16, pitch: "C#4", duration: 0.07}
+      - {time: 0.24, pitch: "D4", duration: 0.07}
+      - {time: 0.32, pitch: "D4", duration: 0.07}
+      - {time: 0.4, pitch: "D4", duration: 0.07}
+      - {time: 0.48, pitch: "E4", duration: 0.15}
+      - {time: 0.66, pitch: "D4", duration: 0.1}
+      - {time: 0.8, pitch: "C#4", duration: 0.15}
+      - {time: 1.0, pitch: "B3", duration: 0.07}
+      - {time: 1.08, pitch: "B3", duration: 0.07}
+      - {time: 1.16, pitch: "B3", duration: 0.07}
+      - {time: 1.24, pitch: "C#4", duration: 0.07}
+      - {time: 1.32, pitch: "C#4", duration: 0.07}
+      - {time: 1.4, pitch: "C#4", duration: 0.07}
+      - {time: 1.48, pitch: "D4", duration: 0.15}
+      - {time: 1.66, pitch: "C#4", duration: 0.1}
+      - {time: 1.8, pitch: "B3", duration: 0.15}
+      - {time: 2.0, pitch: "E4", duration: 0.07}
+      - {time: 2.08, pitch: "G4", duration: 0.07}
+      - {time: 2.16, pitch: "A4", duration: 0.07}
+      - {time: 2.24, pitch: "B4", duration: 0.07}
+      - {time: 2.32, pitch: "C5", duration: 0.15}
+      - {time: 2.5, pitch: "B4", duration: 0.1}
+      - {time: 2.64, pitch: "A4", duration: 0.1}
+      - {time: 2.78, pitch: "G4", duration: 0.1}
+      - {time: 2.92, pitch: "E4", duration: 0.2}
+      - {time: 3.2, pitch: "D4", duration: 0.1}
+      - {time: 3.35, pitch: "C#4", duration: 0.1}
+      - {time: 3.5, pitch: "B3", duration: 0.25}
+
+  triangle:
+    enabled: true
+    volume: 0.8
+    notes:
+      - {time: 0.0, pitch: "F#2", duration: 0.1}
+      - {time: 0.12, pitch: "F#2", duration: 0.1}
+      - {time: 0.24, pitch: "G2", duration: 0.1}
+      - {time: 0.36, pitch: "G2", duration: 0.1}
+      - {time: 0.48, pitch: "A2", duration: 0.15}
+      - {time: 0.66, pitch: "G2", duration: 0.1}
+      - {time: 0.8, pitch: "F#2", duration: 0.15}
+      - {time: 1.0, pitch: "E2", duration: 0.1}
+      - {time: 1.12, pitch: "E2", duration: 0.1}
+      - {time: 1.24, pitch: "F#2", duration: 0.1}
+      - {time: 1.36, pitch: "F#2", duration: 0.1}
+      - {time: 1.48, pitch: "G2", duration: 0.15}
+      - {time: 1.66, pitch: "F#2", duration: 0.1}
+      - {time: 1.8, pitch: "E2", duration: 0.15}
+      - {time: 2.0, pitch: "A2", duration: 0.1}
+      - {time: 2.12, pitch: "A2", duration: 0.1}
+      - {time: 2.24, pitch: "A2", duration: 0.1}
+      - {time: 2.36, pitch: "A2", duration: 0.1}
+      - {time: 2.5, pitch: "G2", duration: 0.1}
+      - {time: 2.64, pitch: "F#2", duration: 0.1}
+      - {time: 2.78, pitch: "E2", duration: 0.1}
+      - {time: 2.92, pitch: "A1", duration: 0.25}
+      - {time: 3.2, pitch: "G1", duration: 0.12}
+      - {time: 3.35, pitch: "F#1", duration: 0.12}
+      - {time: 3.5, pitch: "E1", duration: 0.25}
+
+  noise:
+    enabled: true
+    volume: 0.42
+    mode: "random"
+    notes:
+      - {time: 0.0, period: 4, duration: 0.04}
+      - {time: 0.08, period: 4, duration: 0.04}
+      - {time: 0.16, period: 4, duration: 0.04}
+      - {time: 0.24, period: 4, duration: 0.04}
+      - {time: 0.32, period: 4, duration: 0.04}
+      - {time: 0.4, period: 4, duration: 0.04}
+      - {time: 0.48, period: 2, duration: 0.05}
+      - {time: 0.66, period: 4, duration: 0.04}
+      - {time: 0.8, period: 2, duration: 0.05}
+      - {time: 1.0, period: 4, duration: 0.04}
+      - {time: 1.08, period: 4, duration: 0.04}
+      - {time: 1.16, period: 4, duration: 0.04}
+      - {time: 1.24, period: 4, duration: 0.04}
+      - {time: 1.32, period: 4, duration: 0.04}
+      - {time: 1.4, period: 4, duration: 0.04}
+      - {time: 1.48, period: 2, duration: 0.05}
+      - {time: 1.66, period: 4, duration: 0.04}
+      - {time: 1.8, period: 2, duration: 0.05}
+      - {time: 2.0, period: 4, duration: 0.04}
+      - {time: 2.08, period: 4, duration: 0.04}
+      - {time: 2.16, period: 4, duration: 0.04}
+      - {time: 2.24, period: 4, duration: 0.04}
+      - {time: 2.32, period: 2, duration: 0.05}
+      - {time: 2.5, period: 4, duration: 0.04}
+      - {time: 2.64, period: 4, duration: 0.04}
+      - {time: 2.78, period: 4, duration: 0.04}
+      - {time: 2.92, period: 2, duration: 0.06}
+      - {time: 3.2, period: 4, duration: 0.04}
+      - {time: 3.35, period: 4, duration: 0.04}
+      - {time: 3.5, period: 2, duration: 0.08}

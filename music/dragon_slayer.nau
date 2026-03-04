@@ -1,0 +1,130 @@
+# Dragon Slayer - Power Metal
+title: "Dragon Slayer"
+composer: "NES Metal"
+tempo: 160
+time_signature: "4/4"
+
+channels:
+  pulse1:
+    enabled: true
+    duty_cycle: 0.25
+    volume: 0.85
+    notes:
+      - {time: 0.0, pitch: "E5", duration: 0.2}
+      - {time: 0.25, pitch: "F#5", duration: 0.2}
+      - {time: 0.5, pitch: "G5", duration: 0.2}
+      - {time: 0.75, pitch: "A5", duration: 0.4}
+      - {time: 1.25, pitch: "G5", duration: 0.2}
+      - {time: 1.5, pitch: "F#5", duration: 0.2}
+      - {time: 1.75, pitch: "E5", duration: 0.4}
+      - {time: 2.25, pitch: "B4", duration: 0.2}
+      - {time: 2.5, pitch: "C#5", duration: 0.2}
+      - {time: 2.75, pitch: "D5", duration: 0.2}
+      - {time: 3.0, pitch: "E5", duration: 0.4}
+      - {time: 3.5, pitch: "F#5", duration: 0.2}
+      - {time: 3.75, pitch: "G5", duration: 0.2}
+      - {time: 4.0, pitch: "A5", duration: 0.5}
+      - {time: 4.6, pitch: "B5", duration: 0.15}
+      - {time: 4.8, pitch: "A5", duration: 0.15}
+      - {time: 5.0, pitch: "G5", duration: 0.15}
+      - {time: 5.2, pitch: "F#5", duration: 0.15}
+      - {time: 5.4, pitch: "E5", duration: 0.6}
+
+  pulse2:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.6
+    notes:
+      - {time: 0.0, pitch: "E4", duration: 0.2}
+      - {time: 0.25, pitch: "E4", duration: 0.2}
+      - {time: 0.5, pitch: "E4", duration: 0.2}
+      - {time: 0.75, pitch: "A4", duration: 0.4}
+      - {time: 1.25, pitch: "G4", duration: 0.2}
+      - {time: 1.5, pitch: "F#4", duration: 0.2}
+      - {time: 1.75, pitch: "E4", duration: 0.4}
+      - {time: 2.25, pitch: "B3", duration: 0.2}
+      - {time: 2.5, pitch: "B3", duration: 0.2}
+      - {time: 2.75, pitch: "D4", duration: 0.2}
+      - {time: 3.0, pitch: "E4", duration: 0.4}
+      - {time: 3.5, pitch: "F#4", duration: 0.2}
+      - {time: 3.75, pitch: "G4", duration: 0.2}
+      - {time: 4.0, pitch: "A4", duration: 0.5}
+      - {time: 4.6, pitch: "G4", duration: 0.15}
+      - {time: 4.8, pitch: "F#4", duration: 0.15}
+      - {time: 5.0, pitch: "E4", duration: 0.15}
+      - {time: 5.2, pitch: "D4", duration: 0.15}
+      - {time: 5.4, pitch: "B3", duration: 0.6}
+
+  triangle:
+    enabled: true
+    volume: 0.75
+    notes:
+      - {time: 0.0, pitch: "E2", duration: 0.1}
+      - {time: 0.125, pitch: "E3", duration: 0.1}
+      - {time: 0.25, pitch: "E2", duration: 0.1}
+      - {time: 0.375, pitch: "E3", duration: 0.1}
+      - {time: 0.5, pitch: "E2", duration: 0.1}
+      - {time: 0.625, pitch: "E3", duration: 0.1}
+      - {time: 0.75, pitch: "A2", duration: 0.1}
+      - {time: 0.875, pitch: "A3", duration: 0.1}
+      - {time: 1.0, pitch: "A2", duration: 0.1}
+      - {time: 1.125, pitch: "A3", duration: 0.1}
+      - {time: 1.25, pitch: "G2", duration: 0.1}
+      - {time: 1.375, pitch: "G3", duration: 0.1}
+      - {time: 1.5, pitch: "F#2", duration: 0.1}
+      - {time: 1.625, pitch: "F#3", duration: 0.1}
+      - {time: 1.75, pitch: "E2", duration: 0.1}
+      - {time: 1.875, pitch: "E3", duration: 0.1}
+      - {time: 2.0, pitch: "E2", duration: 0.1}
+      - {time: 2.125, pitch: "E3", duration: 0.1}
+      - {time: 2.25, pitch: "B1", duration: 0.1}
+      - {time: 2.375, pitch: "B2", duration: 0.1}
+      - {time: 2.5, pitch: "B1", duration: 0.1}
+      - {time: 2.625, pitch: "B2", duration: 0.1}
+      - {time: 2.75, pitch: "D2", duration: 0.1}
+      - {time: 2.875, pitch: "D3", duration: 0.1}
+      - {time: 3.0, pitch: "E2", duration: 0.1}
+      - {time: 3.125, pitch: "E3", duration: 0.1}
+      - {time: 3.25, pitch: "E2", duration: 0.1}
+      - {time: 3.375, pitch: "E3", duration: 0.1}
+      - {time: 3.5, pitch: "F#2", duration: 0.1}
+      - {time: 3.625, pitch: "F#3", duration: 0.1}
+      - {time: 3.75, pitch: "G2", duration: 0.1}
+      - {time: 3.875, pitch: "G3", duration: 0.1}
+      - {time: 4.0, pitch: "A2", duration: 0.3}
+      - {time: 4.4, pitch: "A3", duration: 0.15}
+      - {time: 4.6, pitch: "G2", duration: 0.15}
+      - {time: 4.8, pitch: "F#2", duration: 0.15}
+      - {time: 5.0, pitch: "E2", duration: 0.15}
+      - {time: 5.2, pitch: "D2", duration: 0.15}
+      - {time: 5.4, pitch: "E2", duration: 0.6}
+
+  noise:
+    enabled: true
+    volume: 0.35
+    mode: "random"
+    notes:
+      - {time: 0.0, period: 4, duration: 0.05}
+      - {time: 0.25, period: 2, duration: 0.05}
+      - {time: 0.5, period: 4, duration: 0.05}
+      - {time: 0.75, period: 2, duration: 0.05}
+      - {time: 1.0, period: 4, duration: 0.05}
+      - {time: 1.25, period: 2, duration: 0.05}
+      - {time: 1.5, period: 4, duration: 0.05}
+      - {time: 1.75, period: 2, duration: 0.05}
+      - {time: 2.0, period: 4, duration: 0.05}
+      - {time: 2.25, period: 2, duration: 0.05}
+      - {time: 2.5, period: 4, duration: 0.05}
+      - {time: 2.75, period: 2, duration: 0.05}
+      - {time: 3.0, period: 4, duration: 0.05}
+      - {time: 3.25, period: 2, duration: 0.05}
+      - {time: 3.5, period: 4, duration: 0.05}
+      - {time: 3.75, period: 2, duration: 0.05}
+      - {time: 4.0, period: 4, duration: 0.05}
+      - {time: 4.2, period: 4, duration: 0.05}
+      - {time: 4.4, period: 2, duration: 0.05}
+      - {time: 4.6, period: 4, duration: 0.05}
+      - {time: 4.8, period: 4, duration: 0.05}
+      - {time: 5.0, period: 2, duration: 0.05}
+      - {time: 5.2, period: 4, duration: 0.05}
+      - {time: 5.4, period: 2, duration: 0.08}

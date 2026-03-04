@@ -1,0 +1,113 @@
+# Wrath of Titans - Symphonic Metal
+title: "Wrath of Titans"
+composer: "NES Metal"
+tempo: 150
+time_signature: "4/4"
+
+channels:
+  pulse1:
+    enabled: true
+    duty_cycle: 0.25
+    volume: 0.85
+    notes:
+      - {time: 0.0, pitch: "C5", duration: 0.3}
+      - {time: 0.35, pitch: "D5", duration: 0.15}
+      - {time: 0.55, pitch: "E5", duration: 0.15}
+      - {time: 0.75, pitch: "G5", duration: 0.5}
+      - {time: 1.3, pitch: "F5", duration: 0.15}
+      - {time: 1.5, pitch: "E5", duration: 0.15}
+      - {time: 1.7, pitch: "D5", duration: 0.25}
+      - {time: 2.0, pitch: "E5", duration: 0.3}
+      - {time: 2.35, pitch: "D5", duration: 0.15}
+      - {time: 2.55, pitch: "C5", duration: 0.15}
+      - {time: 2.75, pitch: "B4", duration: 0.5}
+      - {time: 3.3, pitch: "C5", duration: 0.15}
+      - {time: 3.5, pitch: "D5", duration: 0.15}
+      - {time: 3.7, pitch: "E5", duration: 0.25}
+      - {time: 4.0, pitch: "G5", duration: 0.25}
+      - {time: 4.3, pitch: "A5", duration: 0.25}
+      - {time: 4.6, pitch: "G5", duration: 0.25}
+      - {time: 4.9, pitch: "F5", duration: 0.25}
+      - {time: 5.2, pitch: "E5", duration: 0.25}
+      - {time: 5.5, pitch: "D5", duration: 0.25}
+      - {time: 5.8, pitch: "C5", duration: 0.4}
+
+  pulse2:
+    enabled: true
+    duty_cycle: 0.125
+    volume: 0.6
+    notes:
+      - {time: 0.0, pitch: "E4", duration: 0.3}
+      - {time: 0.35, pitch: "F4", duration: 0.15}
+      - {time: 0.55, pitch: "G4", duration: 0.15}
+      - {time: 0.75, pitch: "C5", duration: 0.5}
+      - {time: 1.3, pitch: "A4", duration: 0.15}
+      - {time: 1.5, pitch: "G4", duration: 0.15}
+      - {time: 1.7, pitch: "F4", duration: 0.25}
+      - {time: 2.0, pitch: "G4", duration: 0.3}
+      - {time: 2.35, pitch: "F4", duration: 0.15}
+      - {time: 2.55, pitch: "E4", duration: 0.15}
+      - {time: 2.75, pitch: "D4", duration: 0.5}
+      - {time: 3.3, pitch: "E4", duration: 0.15}
+      - {time: 3.5, pitch: "F4", duration: 0.15}
+      - {time: 3.7, pitch: "G4", duration: 0.25}
+      - {time: 4.0, pitch: "C5", duration: 0.25}
+      - {time: 4.3, pitch: "E5", duration: 0.25}
+      - {time: 4.6, pitch: "D5", duration: 0.25}
+      - {time: 4.9, pitch: "C5", duration: 0.25}
+      - {time: 5.2, pitch: "B4", duration: 0.25}
+      - {time: 5.5, pitch: "A4", duration: 0.25}
+      - {time: 5.8, pitch: "G4", duration: 0.4}
+
+  triangle:
+    enabled: true
+    volume: 0.8
+    notes:
+      - {time: 0.0, pitch: "C2", duration: 0.2}
+      - {time: 0.25, pitch: "G2", duration: 0.2}
+      - {time: 0.5, pitch: "C3", duration: 0.2}
+      - {time: 0.75, pitch: "C2", duration: 0.2}
+      - {time: 1.0, pitch: "G2", duration: 0.2}
+      - {time: 1.25, pitch: "C3", duration: 0.2}
+      - {time: 1.5, pitch: "F2", duration: 0.2}
+      - {time: 1.75, pitch: "G2", duration: 0.2}
+      - {time: 2.0, pitch: "C2", duration: 0.2}
+      - {time: 2.25, pitch: "G2", duration: 0.2}
+      - {time: 2.5, pitch: "C3", duration: 0.2}
+      - {time: 2.75, pitch: "G2", duration: 0.2}
+      - {time: 3.0, pitch: "B2", duration: 0.2}
+      - {time: 3.25, pitch: "G2", duration: 0.2}
+      - {time: 3.5, pitch: "D2", duration: 0.2}
+      - {time: 3.75, pitch: "G2", duration: 0.2}
+      - {time: 4.0, pitch: "C2", duration: 0.25}
+      - {time: 4.3, pitch: "A2", duration: 0.25}
+      - {time: 4.6, pitch: "G2", duration: 0.25}
+      - {time: 4.9, pitch: "F2", duration: 0.25}
+      - {time: 5.2, pitch: "E2", duration: 0.25}
+      - {time: 5.5, pitch: "D2", duration: 0.25}
+      - {time: 5.8, pitch: "C2", duration: 0.4}
+
+  noise:
+    enabled: true
+    volume: 0.35
+    mode: "random"
+    notes:
+      - {time: 0.0, period: 4, duration: 0.06}
+      - {time: 0.35, period: 2, duration: 0.06}
+      - {time: 0.75, period: 4, duration: 0.06}
+      - {time: 1.0, period: 4, duration: 0.06}
+      - {time: 1.3, period: 2, duration: 0.06}
+      - {time: 1.7, period: 4, duration: 0.06}
+      - {time: 2.0, period: 4, duration: 0.06}
+      - {time: 2.35, period: 2, duration: 0.06}
+      - {time: 2.75, period: 4, duration: 0.06}
+      - {time: 3.0, period: 4, duration: 0.06}
+      - {time: 3.3, period: 2, duration: 0.06}
+      - {time: 3.7, period: 4, duration: 0.06}
+      - {time: 4.0, period: 4, duration: 0.05}
+      - {time: 4.3, period: 2, duration: 0.05}
+      - {time: 4.6, period: 4, duration: 0.05}
+      - {time: 4.9, period: 2, duration: 0.05}
+      - {time: 5.2, period: 4, duration: 0.05}
+      - {time: 5.5, period: 2, duration: 0.05}
+      - {time: 5.8, period: 2, duration: 0.08}

@@ -1,0 +1,77 @@
+# Night Stalker - Doom Metal
+title: "Night Stalker"
+composer: "NES Metal"
+tempo: 90
+time_signature: "4/4"
+
+channels:
+  pulse1:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.9
+    notes:
+      - {time: 0.0, pitch: "E3", duration: 0.6}
+      - {time: 0.7, pitch: "G3", duration: 0.6}
+      - {time: 1.4, pitch: "A3", duration: 0.4}
+      - {time: 1.9, pitch: "A#3", duration: 0.4}
+      - {time: 2.4, pitch: "A3", duration: 0.8}
+      - {time: 3.3, pitch: "G3", duration: 0.6}
+      - {time: 4.0, pitch: "E3", duration: 0.8}
+      - {time: 4.9, pitch: "D3", duration: 0.4}
+      - {time: 5.4, pitch: "E3", duration: 0.8}
+      - {time: 6.3, pitch: "G3", duration: 0.4}
+      - {time: 6.8, pitch: "A3", duration: 0.4}
+      - {time: 7.3, pitch: "E3", duration: 0.8}
+
+  pulse2:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.7
+    notes:
+      - {time: 0.0, pitch: "B2", duration: 0.6}
+      - {time: 0.7, pitch: "D3", duration: 0.6}
+      - {time: 1.4, pitch: "E3", duration: 0.4}
+      - {time: 1.9, pitch: "F3", duration: 0.4}
+      - {time: 2.4, pitch: "E3", duration: 0.8}
+      - {time: 3.3, pitch: "D3", duration: 0.6}
+      - {time: 4.0, pitch: "B2", duration: 0.8}
+      - {time: 4.9, pitch: "A2", duration: 0.4}
+      - {time: 5.4, pitch: "B2", duration: 0.8}
+      - {time: 6.3, pitch: "D3", duration: 0.4}
+      - {time: 6.8, pitch: "E3", duration: 0.4}
+      - {time: 7.3, pitch: "B2", duration: 0.8}
+
+  triangle:
+    enabled: true
+    volume: 0.85
+    notes:
+      - {time: 0.0, pitch: "E1", duration: 0.6}
+      - {time: 0.7, pitch: "G1", duration: 0.6}
+      - {time: 1.4, pitch: "A1", duration: 0.4}
+      - {time: 1.9, pitch: "A#1", duration: 0.4}
+      - {time: 2.4, pitch: "A1", duration: 0.8}
+      - {time: 3.3, pitch: "G1", duration: 0.6}
+      - {time: 4.0, pitch: "E1", duration: 0.8}
+      - {time: 4.9, pitch: "D1", duration: 0.4}
+      - {time: 5.4, pitch: "E1", duration: 0.8}
+      - {time: 6.3, pitch: "G1", duration: 0.4}
+      - {time: 6.8, pitch: "A1", duration: 0.4}
+      - {time: 7.3, pitch: "E1", duration: 0.8}
+
+  noise:
+    enabled: true
+    volume: 0.3
+    mode: "random"
+    notes:
+      - {time: 0.0, period: 5, duration: 0.1}
+      - {time: 0.7, period: 2, duration: 0.1}
+      - {time: 1.4, period: 5, duration: 0.1}
+      - {time: 1.9, period: 2, duration: 0.1}
+      - {time: 2.4, period: 5, duration: 0.1}
+      - {time: 3.3, period: 2, duration: 0.1}
+      - {time: 4.0, period: 5, duration: 0.1}
+      - {time: 4.9, period: 2, duration: 0.1}
+      - {time: 5.4, period: 5, duration: 0.1}
+      - {time: 6.3, period: 2, duration: 0.1}
+      - {time: 6.8, period: 5, duration: 0.1}
+      - {time: 7.3, period: 2, duration: 0.1}

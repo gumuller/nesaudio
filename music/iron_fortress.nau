@@ -1,0 +1,128 @@
+# Iron Fortress - Thrash Metal
+title: "Iron Fortress"
+composer: "NES Metal"
+tempo: 180
+time_signature: "4/4"
+
+channels:
+  pulse1:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.9
+    notes:
+      - {time: 0.0, pitch: "E4", duration: 0.08}
+      - {time: 0.1, pitch: "E4", duration: 0.08}
+      - {time: 0.2, pitch: "E4", duration: 0.08}
+      - {time: 0.33, pitch: "E4", duration: 0.08}
+      - {time: 0.43, pitch: "E4", duration: 0.08}
+      - {time: 0.53, pitch: "E4", duration: 0.08}
+      - {time: 0.66, pitch: "G4", duration: 0.15}
+      - {time: 0.83, pitch: "F#4", duration: 0.15}
+      - {time: 1.0, pitch: "E4", duration: 0.08}
+      - {time: 1.1, pitch: "E4", duration: 0.08}
+      - {time: 1.2, pitch: "E4", duration: 0.08}
+      - {time: 1.33, pitch: "D#4", duration: 0.08}
+      - {time: 1.43, pitch: "D4", duration: 0.08}
+      - {time: 1.53, pitch: "C#4", duration: 0.08}
+      - {time: 1.66, pitch: "C4", duration: 0.15}
+      - {time: 1.83, pitch: "B3", duration: 0.15}
+      - {time: 2.0, pitch: "E4", duration: 0.08}
+      - {time: 2.1, pitch: "F#4", duration: 0.08}
+      - {time: 2.2, pitch: "G4", duration: 0.08}
+      - {time: 2.33, pitch: "A4", duration: 0.08}
+      - {time: 2.43, pitch: "B4", duration: 0.08}
+      - {time: 2.53, pitch: "C5", duration: 0.08}
+      - {time: 2.66, pitch: "D5", duration: 0.15}
+      - {time: 2.83, pitch: "E5", duration: 0.15}
+      - {time: 3.0, pitch: "E5", duration: 0.25}
+      - {time: 3.33, pitch: "D5", duration: 0.25}
+      - {time: 3.66, pitch: "C5", duration: 0.33}
+
+  pulse2:
+    enabled: true
+    duty_cycle: 0.5
+    volume: 0.7
+    notes:
+      - {time: 0.0, pitch: "B3", duration: 0.08}
+      - {time: 0.1, pitch: "B3", duration: 0.08}
+      - {time: 0.2, pitch: "B3", duration: 0.08}
+      - {time: 0.33, pitch: "B3", duration: 0.08}
+      - {time: 0.43, pitch: "B3", duration: 0.08}
+      - {time: 0.53, pitch: "B3", duration: 0.08}
+      - {time: 0.66, pitch: "D4", duration: 0.15}
+      - {time: 0.83, pitch: "C#4", duration: 0.15}
+      - {time: 1.0, pitch: "B3", duration: 0.08}
+      - {time: 1.1, pitch: "B3", duration: 0.08}
+      - {time: 1.2, pitch: "B3", duration: 0.08}
+      - {time: 1.33, pitch: "A#3", duration: 0.08}
+      - {time: 1.43, pitch: "A3", duration: 0.08}
+      - {time: 1.53, pitch: "G#3", duration: 0.08}
+      - {time: 1.66, pitch: "G3", duration: 0.15}
+      - {time: 1.83, pitch: "F#3", duration: 0.15}
+      - {time: 2.0, pitch: "B3", duration: 0.08}
+      - {time: 2.1, pitch: "C#4", duration: 0.08}
+      - {time: 2.2, pitch: "D4", duration: 0.08}
+      - {time: 2.33, pitch: "E4", duration: 0.08}
+      - {time: 2.43, pitch: "F#4", duration: 0.08}
+      - {time: 2.53, pitch: "G4", duration: 0.08}
+      - {time: 2.66, pitch: "A4", duration: 0.15}
+      - {time: 2.83, pitch: "B4", duration: 0.15}
+      - {time: 3.0, pitch: "B4", duration: 0.25}
+      - {time: 3.33, pitch: "A4", duration: 0.25}
+      - {time: 3.66, pitch: "G4", duration: 0.33}
+
+  triangle:
+    enabled: true
+    volume: 0.8
+    notes:
+      - {time: 0.0, pitch: "E2", duration: 0.15}
+      - {time: 0.2, pitch: "E2", duration: 0.15}
+      - {time: 0.4, pitch: "E2", duration: 0.15}
+      - {time: 0.6, pitch: "E2", duration: 0.15}
+      - {time: 0.8, pitch: "E2", duration: 0.15}
+      - {time: 1.0, pitch: "E2", duration: 0.15}
+      - {time: 1.2, pitch: "D2", duration: 0.15}
+      - {time: 1.4, pitch: "C2", duration: 0.15}
+      - {time: 1.6, pitch: "C2", duration: 0.15}
+      - {time: 1.8, pitch: "B1", duration: 0.15}
+      - {time: 2.0, pitch: "E2", duration: 0.15}
+      - {time: 2.2, pitch: "E2", duration: 0.15}
+      - {time: 2.4, pitch: "E2", duration: 0.15}
+      - {time: 2.6, pitch: "E2", duration: 0.15}
+      - {time: 2.8, pitch: "E2", duration: 0.15}
+      - {time: 3.0, pitch: "E2", duration: 0.25}
+      - {time: 3.33, pitch: "D2", duration: 0.25}
+      - {time: 3.66, pitch: "C2", duration: 0.33}
+
+  noise:
+    enabled: true
+    volume: 0.4
+    mode: "random"
+    notes:
+      - {time: 0.0, period: 4, duration: 0.05}
+      - {time: 0.1, period: 4, duration: 0.05}
+      - {time: 0.2, period: 4, duration: 0.05}
+      - {time: 0.33, period: 4, duration: 0.05}
+      - {time: 0.43, period: 4, duration: 0.05}
+      - {time: 0.53, period: 4, duration: 0.05}
+      - {time: 0.66, period: 2, duration: 0.05}
+      - {time: 0.83, period: 2, duration: 0.05}
+      - {time: 1.0, period: 4, duration: 0.05}
+      - {time: 1.1, period: 4, duration: 0.05}
+      - {time: 1.2, period: 4, duration: 0.05}
+      - {time: 1.33, period: 4, duration: 0.05}
+      - {time: 1.43, period: 4, duration: 0.05}
+      - {time: 1.53, period: 4, duration: 0.05}
+      - {time: 1.66, period: 2, duration: 0.05}
+      - {time: 1.83, period: 2, duration: 0.05}
+      - {time: 2.0, period: 4, duration: 0.05}
+      - {time: 2.1, period: 4, duration: 0.05}
+      - {time: 2.2, period: 4, duration: 0.05}
+      - {time: 2.33, period: 4, duration: 0.05}
+      - {time: 2.43, period: 4, duration: 0.05}
+      - {time: 2.53, period: 4, duration: 0.05}
+      - {time: 2.66, period: 2, duration: 0.05}
+      - {time: 2.83, period: 2, duration: 0.05}
+      - {time: 3.0, period: 2, duration: 0.08}
+      - {time: 3.33, period: 2, duration: 0.08}
+      - {time: 3.66, period: 2, duration: 0.08}
