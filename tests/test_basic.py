@@ -2,7 +2,10 @@
 Basic tests for NESAUDIO components
 """
 
+import os
+
 import numpy as np
+import pytest
 from nesaudio.audio.waveforms import generate_pulse, generate_triangle, generate_noise
 from nesaudio.audio.channels import PulseChannel, TriangleChannel
 from nesaudio.music.pitch import pitch_to_hz, hz_to_pitch
@@ -65,15 +68,16 @@ def test_pitch_conversion():
 
 def test_nau_parser():
     """Test .nau file parser"""
-    try:
-        parser = NAUParser()
-        song = parser.parse("music/bach_prelude_c_major.nau")
-        assert song.title == "Prelude in C Major"
-        assert song.composer == "Johann Sebastian Bach"
-        assert "pulse1" in song.channels
-        print("[OK] .nau parser works")
-    except Exception as e:
-        print(f"[WARN] .nau parser test skipped: {e}")
+    sample = "music/bach_prelude_c_major.nau"
+    if not os.path.exists(sample):
+        pytest.skip(f"sample file not found: {sample}")
+
+    parser = NAUParser()
+    song = parser.parse(sample)
+    assert song.title == "Prelude in C Major"
+    assert song.composer == "Johann Sebastian Bach"
+    assert "pulse1" in song.channels
+    print("[OK] .nau parser works")
 
 
 if __name__ == "__main__":

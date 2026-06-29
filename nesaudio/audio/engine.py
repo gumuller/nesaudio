@@ -5,12 +5,15 @@ Main audio engine with sounddevice integration
 import numpy as np
 import sounddevice as sd
 import threading
+import logging
 from typing import Optional, Callable
 from .channels import ChannelManager
 from .mixer import Mixer
 from .spectrum import SpectrumAnalyzer
 from .recorder import Recorder
 from ..config import SAMPLE_RATE, BUFFER_SIZE
+
+logger = logging.getLogger(__name__)
 
 
 class AudioEngine:
@@ -52,7 +55,7 @@ class AudioEngine:
             self.stream.start()
             self.is_running = True
         except Exception as e:
-            print(f"Error starting audio engine: {e}")
+            logger.error("Error starting audio engine: %s", e)
             raise
 
     def stop(self):
@@ -78,7 +81,7 @@ class AudioEngine:
         This runs in a separate audio thread.
         """
         if status:
-            print(f"Audio callback status: {status}")
+            logger.warning("Audio callback status: %s", status)
 
         try:
             with self.lock:
@@ -125,9 +128,7 @@ class AudioEngine:
                 outdata[:, 0] = mixed
 
         except Exception as e:
-            import traceback
-            print(f"Error in audio callback: {e}")
-            traceback.print_exc()
+            logger.exception("Error in audio callback: %s", e)
             outdata.fill(0)
 
     def set_update_callback(self, callback: Callable):
