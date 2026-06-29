@@ -21,11 +21,12 @@ A Python-based terminal application that brings the iconic sound of the Nintendo
 
 ### 🎵 Music Playback
 - **Custom .nau Format**: YAML-based, human-readable music file format
-- **6 Sample Songs Included**:
+- **7 Sample Songs Included**:
   - Bach - Prelude in C Major
   - Bach - Minuet in G Major
   - Mozart - Eine Kleine Nachtmusik
   - Super Mario Bros - Overworld Theme
+  - Super Mario Bros 3 - World 1 Map
   - The Legend of Zelda - Overworld Theme
   - Mega Man 2 - Stage Select
 
