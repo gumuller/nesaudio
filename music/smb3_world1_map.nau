@@ -14,33 +14,33 @@ channels:
     volume: 0.8
     notes:
       # Bar 1: E G A G E C
-      - {time: 0.00, pitch: "E5", duration: 0.22}
-      - {time: 0.25, pitch: "G5", duration: 0.22}
-      - {time: 0.50, pitch: "A5", duration: 0.22}
-      - {time: 0.75, pitch: "G5", duration: 0.22}
-      - {time: 1.00, pitch: "E5", duration: 0.22}
-      - {time: 1.25, pitch: "C5", duration: 0.45}
+      - {time: 0.00, pitch: "E5", duration: 0.30}
+      - {time: 0.33, pitch: "G5", duration: 0.15}
+      - {time: 0.50, pitch: "A5", duration: 0.30}
+      - {time: 0.83, pitch: "G5", duration: 0.15}
+      - {time: 1.00, pitch: "E5", duration: 0.30}
+      - {time: 1.33, pitch: "C5", duration: 0.55}
       # Bar 2: E G A G E C
-      - {time: 2.00, pitch: "E5", duration: 0.22}
-      - {time: 2.25, pitch: "G5", duration: 0.22}
-      - {time: 2.50, pitch: "A5", duration: 0.22}
-      - {time: 2.75, pitch: "G5", duration: 0.22}
-      - {time: 3.00, pitch: "E5", duration: 0.22}
-      - {time: 3.25, pitch: "C5", duration: 0.45}
+      - {time: 2.00, pitch: "E5", duration: 0.30}
+      - {time: 2.33, pitch: "G5", duration: 0.15}
+      - {time: 2.50, pitch: "A5", duration: 0.30}
+      - {time: 2.83, pitch: "G5", duration: 0.15}
+      - {time: 3.00, pitch: "E5", duration: 0.30}
+      - {time: 3.33, pitch: "C5", duration: 0.55}
       # Bar 3: E G B G E F E C
-      - {time: 4.00, pitch: "E5", duration: 0.22}
-      - {time: 4.25, pitch: "G5", duration: 0.22}
-      - {time: 4.50, pitch: "B5", duration: 0.22}
-      - {time: 4.75, pitch: "G5", duration: 0.22}
+      - {time: 4.00, pitch: "E5", duration: 0.30}
+      - {time: 4.33, pitch: "G5", duration: 0.15}
+      - {time: 4.50, pitch: "B5", duration: 0.30}
+      - {time: 4.83, pitch: "G5", duration: 0.15}
       - {time: 5.00, pitch: "E5", duration: 0.22}
       - {time: 5.25, pitch: "F5", duration: 0.22}
       - {time: 5.50, pitch: "E5", duration: 0.22}
       - {time: 5.75, pitch: "C5", duration: 0.22}
       # Bar 4: B C D E
-      - {time: 6.00, pitch: "B4", duration: 0.22}
-      - {time: 6.25, pitch: "C5", duration: 0.22}
-      - {time: 6.50, pitch: "D5", duration: 0.22}
-      - {time: 6.75, pitch: "E5", duration: 0.90}
+      - {time: 6.00, pitch: "B4", duration: 0.30}
+      - {time: 6.33, pitch: "C5", duration: 0.30}
+      - {time: 6.66, pitch: "D5", duration: 0.30}
+      - {time: 7.00, pitch: "E5", duration: 0.90}
 
   pulse2:
     enabled: true
