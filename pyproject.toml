@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nesaudio"
+version = "1.0.0"
+description = "NES-style terminal audio application with live sound generation and music playback"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Gustavo Muller" }]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "numpy>=1.24.0",
+    "sounddevice>=0.4.6",
+    "textual>=0.82.0",
+    "rich>=13.0.0",
+    "pyyaml>=6.0",
+    "scipy>=1.10.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+nesaudio = "nesaudio.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["nesaudio*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
