@@ -1,171 +1,189 @@
 """
-Waveform generation functions for NES-style audio synthesis
+Waveform generation for NES-style audio synthesis.
+
+All oscillators track phase in *normalized cycles* (0.0..1.0) rather than
+radians so that the band-limiting math (PolyBLEP) and the triangle staircase
+line up cleanly with the hardware description in :mod:`nesaudio.audio.apu`.
+
+Pulse, triangle and noise generators return a *unipolar* shape in [0, 1]
+representing the normalized DAC waveform; the channels multiply that shape by a
+4-bit (0..15) level before the non-linear mixer combines them.
 """
 
 import numpy as np
 
+from .apu import (
+    CPU_CLOCK_NTSC,
+    NOISE_PERIOD_TABLE,
+    TRIANGLE_STEPS,
+    polyblep,
+)
+
 
 def generate_pulse(frequency: float, duration: float, sample_rate: int,
-                  duty_cycle: float = 0.5, phase: float = 0.0) -> tuple[np.ndarray, float]:
+                   duty_cycle: float = 0.5, phase: float = 0.0) -> tuple[np.ndarray, float]:
     """
-    Generate a pulse wave (square wave) with specified duty cycle.
+    Generate a band-limited pulse (square) wave.
 
     Args:
-        frequency: Frequency in Hz
-        duration: Duration in seconds
-        sample_rate: Sample rate in Hz
-        duty_cycle: Duty cycle (0.0 to 1.0). NES supports 0.125, 0.25, 0.5, 0.75
-        phase: Starting phase in radians
+        frequency: Frequency in Hz.
+        duration: Duration in seconds.
+        sample_rate: Sample rate in Hz.
+        duty_cycle: Duty cycle (NES supports 0.125, 0.25, 0.5, 0.75).
+        phase: Starting phase in normalized cycles (0.0..1.0).
 
     Returns:
-        Tuple of (waveform array, ending phase)
+        Tuple of (unipolar [0, 1] waveform, ending phase in cycles).
     """
-    num_samples = int(duration * sample_rate)
-    t = np.arange(num_samples) / sample_rate
+    num_samples = int(round(duration * sample_rate))
+    if num_samples <= 0:
+        return np.zeros(0, dtype=np.float32), phase
+    if frequency <= 0:
+        return np.zeros(num_samples, dtype=np.float32), phase
 
-    # Calculate phase progression
-    phase_array = (phase + 2 * np.pi * frequency * t) % (2 * np.pi)
+    dt = frequency / sample_rate
+    idx = np.arange(num_samples)
+    ph = (phase + dt * idx) % 1.0
 
-    # Generate pulse wave: high when phase < duty_cycle * 2π, low otherwise
-    output = np.where(phase_array < (2 * np.pi * duty_cycle), 1.0, -1.0)
+    # Canonical bipolar square with PolyBLEP corrections at both edges.
+    wave = np.where(ph < duty_cycle, 1.0, -1.0)
+    wave += polyblep(ph, dt)
+    wave -= polyblep((ph - duty_cycle) % 1.0, dt)
 
-    # Return output and final phase for continuity
-    final_phase = phase_array[-1] if len(phase_array) > 0 else phase
-    return output.astype(np.float32), final_phase
+    # Convert to a unipolar DAC shape in [0, 1].
+    output = np.clip((wave + 1.0) * 0.5, 0.0, 1.0).astype(np.float32)
+
+    final_phase = float((phase + dt * num_samples) % 1.0)
+    return output, final_phase
 
 
 def generate_triangle(frequency: float, duration: float, sample_rate: int,
                       phase: float = 0.0) -> tuple[np.ndarray, float]:
     """
-    Generate a triangle wave.
+    Generate the NES 16-level / 32-step triangle staircase.
 
     Args:
-        frequency: Frequency in Hz
-        duration: Duration in seconds
-        sample_rate: Sample rate in Hz
-        phase: Starting phase in radians
+        frequency: Frequency in Hz.
+        duration: Duration in seconds.
+        sample_rate: Sample rate in Hz.
+        phase: Starting phase in normalized cycles (0.0..1.0).
 
     Returns:
-        Tuple of (waveform array, ending phase)
+        Tuple of (unipolar [0, 1] waveform, ending phase in cycles).
     """
-    num_samples = int(duration * sample_rate)
-    t = np.arange(num_samples) / sample_rate
+    num_samples = int(round(duration * sample_rate))
+    if num_samples <= 0:
+        return np.zeros(0, dtype=np.float32), phase
+    if frequency <= 0:
+        return np.zeros(num_samples, dtype=np.float32), phase
 
-    # Calculate phase progression
-    phase_array = (phase + 2 * np.pi * frequency * t) % (2 * np.pi)
+    dt = frequency / sample_rate
+    idx = np.arange(num_samples)
+    ph = (phase + dt * idx) % 1.0
 
-    # Generate triangle wave using absolute value function
-    # Convert phase (0 to 2π) to triangle (-1 to 1)
-    normalized_phase = phase_array / (2 * np.pi)  # 0 to 1
-    output = 2 * np.abs(2 * (normalized_phase - 0.5)) - 1
+    step = np.floor(ph * 32.0).astype(np.int64) % 32
+    output = (TRIANGLE_STEPS[step] / 15.0).astype(np.float32)
 
-    # Return output and final phase for continuity
-    final_phase = phase_array[-1] if len(phase_array) > 0 else phase
-    return output.astype(np.float32), final_phase
+    final_phase = float((phase + dt * num_samples) % 1.0)
+    return output, final_phase
+
+
+def generate_noise_block(num_samples: int, sample_rate: int, period: int = 8,
+                         mode: str = "random", lfsr: int = 1,
+                         accumulator: float = 0.0) -> tuple[np.ndarray, int, float]:
+    """
+    Generate a block of LFSR noise, clocked at the authentic NES rate.
+
+    The 15-bit shift register is clocked once every ``NOISE_PERIOD_TABLE[period]``
+    CPU cycles; ``accumulator`` carries the fractional sample position between
+    calls so the noise stays phase-continuous across buffer boundaries.
+
+    Args:
+        num_samples: Number of samples to generate.
+        sample_rate: Output sample rate in Hz.
+        period: Noise period index (0..15, lower = higher pitch).
+        mode: "random" (long 32767-step sequence) or "periodic" (short/tonal).
+        lfsr: Current 15-bit LFSR state.
+        accumulator: Fractional sample carry from the previous call.
+
+    Returns:
+        Tuple of (unipolar [0, 1] waveform, new LFSR state, new accumulator).
+    """
+    output = np.zeros(max(0, num_samples), dtype=np.float32)
+    if num_samples <= 0:
+        return output, lfsr, accumulator
+
+    lfsr &= 0x7FFF
+    if lfsr == 0:
+        lfsr = 1
+
+    period_cpu = NOISE_PERIOD_TABLE[period % 16]
+    samples_per_clock = sample_rate * period_cpu / CPU_CLOCK_NTSC
+
+    i = 0
+    acc = accumulator
+    while i < num_samples:
+        # The channel is silenced whenever bit 0 of the shift register is set.
+        value = 0.0 if (lfsr & 1) else 1.0
+
+        remaining = samples_per_clock - acc
+        run = int(np.ceil(remaining)) if remaining > 0 else 1
+        run = max(1, min(run, num_samples - i))
+
+        output[i:i + run] = value
+        i += run
+        acc += run
+
+        # Clock the LFSR as many times as the accumulated samples allow.
+        while acc >= samples_per_clock:
+            acc -= samples_per_clock
+            if mode == "periodic":
+                feedback = (lfsr ^ (lfsr >> 6)) & 1
+            else:
+                feedback = (lfsr ^ (lfsr >> 1)) & 1
+            lfsr = (lfsr >> 1) | (feedback << 14)
+
+    return output, lfsr, acc
 
 
 def generate_noise(duration: float, sample_rate: int, period: int = 8,
                    mode: str = "random", lfsr_state: int = 1) -> tuple[np.ndarray, int]:
     """
-    Generate noise using Linear Feedback Shift Register (LFSR).
+    Generate noise for ``duration`` seconds (convenience wrapper).
 
-    Args:
-        duration: Duration in seconds
-        sample_rate: Sample rate in Hz
-        period: Period setting (0-15, lower = higher pitch)
-        mode: "random" for white noise or "periodic" for tonal noise
-        lfsr_state: Initial LFSR state (15-bit)
-
-    Returns:
-        Tuple of (waveform array, final LFSR state)
+    Returns a unipolar [0, 1] waveform and the final LFSR state.
     """
-    num_samples = int(duration * sample_rate)
-    output = np.zeros(num_samples, dtype=np.float32)
-
-    # NES noise period lookup table (in CPU cycles)
-    # Simplified: map to sample intervals
-    period_table = [4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 4068]
-    period_samples = max(1, period_table[period % 16] // 40)  # Approximate conversion
-
-    # LFSR: 15-bit shift register
-    lfsr = lfsr_state & 0x7FFF  # Ensure 15-bit
-    if lfsr == 0:
-        lfsr = 1
-
-    for i in range(num_samples):
-        if i % period_samples == 0:
-            # Compute feedback bit
-            if mode == "periodic":
-                # Mode 0: feedback from bits 0 and 6
-                feedback = (lfsr & 1) ^ ((lfsr >> 6) & 1)
-            else:
-                # Mode 1: feedback from bits 0 and 1 (white noise)
-                feedback = (lfsr & 1) ^ ((lfsr >> 1) & 1)
-
-            # Shift right and insert feedback at bit 14
-            lfsr = (lfsr >> 1) | (feedback << 14)
-
-        # Output is based on bit 0
-        output[i] = 1.0 if (lfsr & 1) else -1.0
-
+    num_samples = int(round(duration * sample_rate))
+    output, lfsr, _ = generate_noise_block(
+        num_samples, sample_rate, period, mode, lfsr_state, 0.0
+    )
     return output, lfsr
 
 
 def generate_silence(duration: float, sample_rate: int) -> np.ndarray:
-    """
-    Generate silence (zeros).
-
-    Args:
-        duration: Duration in seconds
-        sample_rate: Sample rate in Hz
-
-    Returns:
-        Array of zeros
-    """
-    num_samples = int(duration * sample_rate)
-    return np.zeros(num_samples, dtype=np.float32)
+    """Generate silence (zeros)."""
+    num_samples = int(round(duration * sample_rate))
+    return np.zeros(max(0, num_samples), dtype=np.float32)
 
 
 def apply_envelope(waveform: np.ndarray, attack: float = 0.01, release: float = 0.05,
                    sample_rate: int = 44100) -> np.ndarray:
-    """
-    Apply simple attack/release envelope to waveform.
-
-    Args:
-        waveform: Input waveform array
-        attack: Attack time in seconds
-        release: Release time in seconds
-        sample_rate: Sample rate in Hz
-
-    Returns:
-        Waveform with envelope applied
-    """
+    """Apply a simple linear attack/release envelope to ``waveform``."""
     num_samples = len(waveform)
     envelope = np.ones(num_samples, dtype=np.float32)
 
-    # Attack
     attack_samples = int(attack * sample_rate)
-    if attack_samples > 0 and attack_samples < num_samples:
+    if 0 < attack_samples < num_samples:
         envelope[:attack_samples] = np.linspace(0.0, 1.0, attack_samples, dtype=np.float32)
 
-    # Release
     release_samples = int(release * sample_rate)
-    if release_samples > 0 and release_samples < num_samples:
+    if 0 < release_samples < num_samples:
         envelope[-release_samples:] = np.linspace(1.0, 0.0, release_samples, dtype=np.float32)
 
     return waveform * envelope
 
 
 def quantize_volume(volume: float, levels: int = 16) -> float:
-    """
-    Quantize volume to NES-style levels (4-bit = 16 levels).
-
-    Args:
-        volume: Volume value (0.0 to 1.0)
-        levels: Number of volume levels (NES uses 16)
-
-    Returns:
-        Quantized volume
-    """
+    """Quantize a 0.0..1.0 volume to NES-style 4-bit levels."""
     quantized = np.round(volume * (levels - 1)) / (levels - 1)
-    return np.clip(quantized, 0.0, 1.0)
+    return float(np.clip(quantized, 0.0, 1.0))

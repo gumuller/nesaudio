@@ -1,98 +1,110 @@
 """
-Audio mixer for combining multiple channels
+Audio mixer combining the NES channels with the console's non-linear mixer.
+
+The five channels are summed using Blargg's measured formula (see
+:func:`nesaudio.audio.apu.mix_levels`) rather than a plain linear sum, then the
+result is passed through the same analog filter chain the real hardware has:
+two high-pass filters (90 Hz and 440 Hz) that remove the DAC's DC offset and a
+14 kHz low-pass that rolls off the harsh top end.
 """
 
 import numpy as np
-from typing import List
+from scipy import signal
+from typing import List, Optional
+
+from . import apu
+from ..config import SAMPLE_RATE
+
+# Order the engine feeds channels in.
+_CHANNEL_ORDER = ("pulse1", "pulse2", "triangle", "noise", "dmc")
+
+# Linear make-up gain applied after the (low-level, DC-removed) non-linear mix
+# so a typical multi-channel song reaches a healthy listening level.  Applied
+# before master volume and the final clip, it preserves channel balance.
+_MAKEUP_GAIN = 4.0
+
+
+def _one_pole_highpass(cutoff: float, sample_rate: int):
+    rc = 1.0 / (2.0 * np.pi * cutoff)
+    r = rc / (rc + 1.0 / sample_rate)
+    b = np.array([r, -r], dtype=np.float64)
+    a = np.array([1.0, -r], dtype=np.float64)
+    return b, a
+
+
+def _one_pole_lowpass(cutoff: float, sample_rate: int):
+    dt = 1.0 / sample_rate
+    rc = 1.0 / (2.0 * np.pi * cutoff)
+    alpha = dt / (rc + dt)
+    b = np.array([alpha], dtype=np.float64)
+    a = np.array([1.0, -(1.0 - alpha)], dtype=np.float64)
+    return b, a
 
 
 class Mixer:
-    """Mixes multiple audio channels into a single output"""
+    """Mixes the NES channels into a single filtered mono output."""
 
-    def __init__(self, master_volume: float = 0.7):
-        self.master_volume = np.clip(master_volume, 0.0, 1.0)
+    def __init__(self, master_volume: float = 0.7, sample_rate: int = SAMPLE_RATE):
+        self.master_volume = float(np.clip(master_volume, 0.0, 1.0))
+        self.sample_rate = sample_rate
         self.channel_volumes = {}
 
+        # Approximate NES analog output filters (NESdev "APU Mixer").
+        self._filters = [
+            _one_pole_highpass(90.0, sample_rate),
+            _one_pole_highpass(440.0, sample_rate),
+            _one_pole_lowpass(14000.0, sample_rate),
+        ]
+        self._filter_states = [signal.lfilter_zi(b, a) * 0.0 for b, a in self._filters]
+
     def set_master_volume(self, volume: float):
-        """Set master output volume (0.0 to 1.0)"""
-        self.master_volume = np.clip(volume, 0.0, 1.0)
+        self.master_volume = float(np.clip(volume, 0.0, 1.0))
 
     def set_channel_volume(self, channel_name: str, volume: float):
-        """Set individual channel volume multiplier"""
-        self.channel_volumes[channel_name] = np.clip(volume, 0.0, 1.0)
+        self.channel_volumes[channel_name] = float(np.clip(volume, 0.0, 1.0))
 
-    def mix(self, channel_outputs: List[np.ndarray], channel_names: List[str] = None) -> np.ndarray:
+    def _apply_filters(self, x: np.ndarray) -> np.ndarray:
+        y = x.astype(np.float64)
+        for i, (b, a) in enumerate(self._filters):
+            y, self._filter_states[i] = signal.lfilter(b, a, y, zi=self._filter_states[i])
+        return y
+
+    def mix(self, channel_outputs: List[np.ndarray],
+            channel_names: Optional[List[str]] = None) -> np.ndarray:
         """
-        Mix multiple channel outputs into a single output.
+        Mix per-sample channel DAC levels into a filtered mono signal in [-1, 1].
 
         Args:
-            channel_outputs: List of numpy arrays (audio from each channel)
-            channel_names: Optional list of channel names for individual volume control
-
-        Returns:
-            Mixed audio output
+            channel_outputs: DAC-level arrays (pulse/triangle/noise in 0..15,
+                dmc in 0..127).
+            channel_names: Names aligned with ``channel_outputs``; defaults to
+                the canonical pulse1/pulse2/triangle/noise/dmc order.
         """
         if not channel_outputs:
             return np.array([], dtype=np.float32)
 
-        # Ensure all arrays are the same length
+        names = channel_names or list(_CHANNEL_ORDER[:len(channel_outputs)])
         max_len = max(len(arr) for arr in channel_outputs)
-        padded_outputs = []
 
-        for i, output in enumerate(channel_outputs):
-            # Ensure exact length (trim or pad)
-            if len(output) > max_len:
-                padded = output[:max_len]
-            elif len(output) < max_len:
-                # Pad with zeros if needed
-                padded = np.pad(output, (0, max_len - len(output)), mode='constant')
-            else:
-                padded = output
+        levels = {name: np.zeros(max_len, dtype=np.float32) for name in _CHANNEL_ORDER}
+        for output, name in zip(channel_outputs, names):
+            arr = np.asarray(output, dtype=np.float32)
+            if len(arr) < max_len:
+                arr = np.pad(arr, (0, max_len - len(arr)))
+            trim = self.channel_volumes.get(name, 1.0)
+            if name in levels:
+                levels[name] = arr * trim
 
-            # Apply individual channel volume if specified
-            if channel_names and i < len(channel_names):
-                channel_name = channel_names[i]
-                if channel_name in self.channel_volumes:
-                    padded = padded * self.channel_volumes[channel_name]
+        mixed = apu.mix_levels(
+            levels["pulse1"], levels["pulse2"], levels["triangle"],
+            levels["noise"], levels["dmc"],
+        )
 
-            padded_outputs.append(padded)
-
-        # Sum all channels - convert to array first to ensure same shapes
-        padded_array = np.array(padded_outputs, dtype=np.float32)
-        mixed = np.sum(padded_array, axis=0)
-
-        # Apply master volume
-        mixed = mixed * self.master_volume
-
-        # Soft clipping to prevent harsh distortion
-        # Use tanh for smooth clipping
-        mixed = np.tanh(mixed * 0.7) / 0.7
-
-        # Hard clip as final safety
-        mixed = np.clip(mixed, -1.0, 1.0)
-
+        mixed = self._apply_filters(mixed)
+        mixed = mixed * (_MAKEUP_GAIN * self.master_volume)
+        np.clip(mixed, -1.0, 1.0, out=mixed)
         return mixed.astype(np.float32)
 
-    def mix_with_limiter(self, channel_outputs: List[np.ndarray],
-                        channel_names: List[str] = None,
-                        threshold: float = 0.95) -> np.ndarray:
-        """
-        Mix channels with peak limiting to prevent clipping.
-
-        Args:
-            channel_outputs: List of numpy arrays
-            channel_names: Optional channel names
-            threshold: Peak limit threshold (0.0 to 1.0)
-
-        Returns:
-            Mixed and limited audio output
-        """
-        mixed = self.mix(channel_outputs, channel_names)
-
-        # Peak limiting
-        peak = np.max(np.abs(mixed))
-        if peak > threshold:
-            # Reduce gain to keep within threshold
-            mixed = mixed * (threshold / peak)
-
-        return mixed
+    def reset(self):
+        """Clear the filter memory (e.g. between songs)."""
+        self._filter_states = [signal.lfilter_zi(b, a) * 0.0 for b, a in self._filters]

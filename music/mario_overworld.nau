@@ -10,7 +10,7 @@ channels:
   pulse1:
     enabled: true
     duty_cycle: 0.125
-    volume: 0.8
+    volume: 0.85
     notes:
       # Opening: E-E-REST-E-REST-C-E-REST-G (fast sixteenth notes)
       - {time: 0.0, pitch: "E5", duration: 0.075}
@@ -49,7 +49,7 @@ channels:
   pulse2:
     enabled: true
     duty_cycle: 0.125
-    volume: 0.5
+    volume: 0.6
     notes:
       # Harmony (staccato chords)
       - {time: 0.0, pitch: "F#4", duration: 0.075}
@@ -79,7 +79,7 @@ channels:
 
   triangle:
     enabled: true
-    volume: 0.75
+    volume: 0.7
     notes:
       # Bouncy bass line (faster, tighter)
       - {time: 0.0, pitch: "D3", duration: 0.15}
@@ -112,7 +112,7 @@ channels:
 
   noise:
     enabled: true
-    volume: 0.25
+    volume: 0.3
     mode: "random"
     notes:
       # Percussion on beats (faster rhythm)

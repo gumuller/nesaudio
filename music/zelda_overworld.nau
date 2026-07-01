@@ -9,7 +9,7 @@ channels:
   pulse1:
     enabled: true
     duty_cycle: 0.25
-    volume: 0.8
+    volume: 0.85
     notes:
       # Opening fanfare: A#-F-A#-A#-C-D-D#
       - {time: 0.0, pitch: "A#4", duration: 0.4}
@@ -60,7 +60,7 @@ channels:
   pulse2:
     enabled: true
     duty_cycle: 0.5
-    volume: 0.55
+    volume: 0.6
     notes:
       # Harmony part (playing intervals)
       - {time: 0.0, pitch: "F4", duration: 0.4}
@@ -81,7 +81,7 @@ channels:
 
   triangle:
     enabled: true
-    volume: 0.8
+    volume: 0.7
     notes:
       # Strong bass line
       - {time: 0.0, pitch: "A#2", duration: 0.4}
@@ -93,7 +93,7 @@ channels:
       - {time: 2.9, pitch: "D#3", duration: 0.4}
       - {time: 3.3, pitch: "F3", duration: 0.4}
       - {time: 3.7, pitch: "F3", duration: 0.4}
-      - {time: 4.1, pitch: "G#3", duration: 0.8}
+      - {time: 4.1, pitch: "G#3", duration: 0.7}
       - {time: 4.8, pitch: "A#2", duration: 0.4}
       - {time: 5.2, pitch: "A#2", duration: 0.4}
       - {time: 5.6, pitch: "A#2", duration: 0.6}

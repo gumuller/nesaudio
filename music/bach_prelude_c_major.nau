@@ -1,81 +1,87 @@
 # Bach - Prelude in C Major (BWV 846)
-# Famous arpeggiated pattern from The Well-Tempered Clavier
+# Faithful opening: authentic 16th-note broken-chord figuration
+# on the tempo grid (public domain).
 title: "Prelude in C Major"
 composer: "Johann Sebastian Bach"
-tempo: 80
+tempo: 72
 time_signature: "4/4"
 
 channels:
   pulse1:
     enabled: true
     duty_cycle: 0.5
-    volume: 0.7
+    volume: 0.75
     notes:
-      # Measure 1: C-E-G-C-E-G-C-E
-      - {time: 0.0, pitch: "C4", duration: 0.3}
-      - {time: 0.3, pitch: "E4", duration: 0.3}
-      - {time: 0.6, pitch: "G4", duration: 0.3}
-      - {time: 0.9, pitch: "C5", duration: 0.3}
-      - {time: 1.2, pitch: "E5", duration: 0.3}
-      - {time: 1.5, pitch: "G4", duration: 0.3}
-      - {time: 1.8, pitch: "C5", duration: 0.3}
-      - {time: 2.1, pitch: "E5", duration: 0.3}
-
-      # Measure 2: D-F-A-D-F-A-D-F
-      - {time: 2.4, pitch: "D4", duration: 0.3}
-      - {time: 2.7, pitch: "F4", duration: 0.3}
-      - {time: 3.0, pitch: "A4", duration: 0.3}
-      - {time: 3.3, pitch: "D5", duration: 0.3}
-      - {time: 3.6, pitch: "F5", duration: 0.3}
-      - {time: 3.9, pitch: "A4", duration: 0.3}
-      - {time: 4.2, pitch: "D5", duration: 0.3}
-      - {time: 4.5, pitch: "F5", duration: 0.3}
-
-      # Measure 3: G-D-G-B-D-G-B-D
-      - {time: 4.8, pitch: "G3", duration: 0.3}
-      - {time: 5.1, pitch: "D4", duration: 0.3}
-      - {time: 5.4, pitch: "G4", duration: 0.3}
-      - {time: 5.7, pitch: "B4", duration: 0.3}
-      - {time: 6.0, pitch: "D5", duration: 0.3}
-      - {time: 6.3, pitch: "G4", duration: 0.3}
-      - {time: 6.6, pitch: "B4", duration: 0.3}
-      - {time: 6.9, pitch: "D5", duration: 0.3}
-
-      # Measure 4: C-E-G-C-E-G-C-E (return)
-      - {time: 7.2, pitch: "C4", duration: 0.3}
-      - {time: 7.5, pitch: "E4", duration: 0.3}
-      - {time: 7.8, pitch: "G4", duration: 0.3}
-      - {time: 8.1, pitch: "C5", duration: 0.3}
-      - {time: 8.4, pitch: "E5", duration: 0.3}
-      - {time: 8.7, pitch: "G4", duration: 0.3}
-      - {time: 9.0, pitch: "C5", duration: 0.3}
-      - {time: 9.3, pitch: "E5", duration: 0.3}
-
-  pulse2:
-    enabled: true
-    duty_cycle: 0.25
-    volume: 0.5
-    notes:
-      # Harmony part (following the arpeggio pattern)
-      - {time: 0.3, pitch: "G4", duration: 0.3}
-      - {time: 0.9, pitch: "E5", duration: 0.3}
-      - {time: 1.5, pitch: "C5", duration: 0.3}
-      - {time: 2.4, pitch: "F4", duration: 0.3}
-      - {time: 3.0, pitch: "D5", duration: 0.3}
-      - {time: 3.6, pitch: "A4", duration: 0.3}
-      - {time: 4.8, pitch: "D4", duration: 0.3}
-      - {time: 5.4, pitch: "B4", duration: 0.3}
-      - {time: 6.0, pitch: "G4", duration: 0.3}
-      - {time: 7.2, pitch: "E4", duration: 0.3}
-      - {time: 7.8, pitch: "C5", duration: 0.3}
-      - {time: 8.4, pitch: "G4", duration: 0.3}
+      - {beat: 0, pitch: "C4", beats: 0.25}
+      - {beat: 0.25, pitch: "E4", beats: 0.25}
+      - {beat: 0.5, pitch: "G4", beats: 0.25}
+      - {beat: 0.75, pitch: "C5", beats: 0.25}
+      - {beat: 1, pitch: "E5", beats: 0.25}
+      - {beat: 1.25, pitch: "G4", beats: 0.25}
+      - {beat: 1.5, pitch: "C5", beats: 0.25}
+      - {beat: 1.75, pitch: "E5", beats: 0.25}
+      - {beat: 2, pitch: "C4", beats: 0.25}
+      - {beat: 2.25, pitch: "E4", beats: 0.25}
+      - {beat: 2.5, pitch: "G4", beats: 0.25}
+      - {beat: 2.75, pitch: "C5", beats: 0.25}
+      - {beat: 3, pitch: "E5", beats: 0.25}
+      - {beat: 3.25, pitch: "G4", beats: 0.25}
+      - {beat: 3.5, pitch: "C5", beats: 0.25}
+      - {beat: 3.75, pitch: "E5", beats: 0.25}
+      - {beat: 4, pitch: "C4", beats: 0.25}
+      - {beat: 4.25, pitch: "D4", beats: 0.25}
+      - {beat: 4.5, pitch: "A4", beats: 0.25}
+      - {beat: 4.75, pitch: "D5", beats: 0.25}
+      - {beat: 5, pitch: "F5", beats: 0.25}
+      - {beat: 5.25, pitch: "A4", beats: 0.25}
+      - {beat: 5.5, pitch: "D5", beats: 0.25}
+      - {beat: 5.75, pitch: "F5", beats: 0.25}
+      - {beat: 6, pitch: "C4", beats: 0.25}
+      - {beat: 6.25, pitch: "D4", beats: 0.25}
+      - {beat: 6.5, pitch: "A4", beats: 0.25}
+      - {beat: 6.75, pitch: "D5", beats: 0.25}
+      - {beat: 7, pitch: "F5", beats: 0.25}
+      - {beat: 7.25, pitch: "A4", beats: 0.25}
+      - {beat: 7.5, pitch: "D5", beats: 0.25}
+      - {beat: 7.75, pitch: "F5", beats: 0.25}
+      - {beat: 8, pitch: "B3", beats: 0.25}
+      - {beat: 8.25, pitch: "D4", beats: 0.25}
+      - {beat: 8.5, pitch: "G4", beats: 0.25}
+      - {beat: 8.75, pitch: "D5", beats: 0.25}
+      - {beat: 9, pitch: "F5", beats: 0.25}
+      - {beat: 9.25, pitch: "G4", beats: 0.25}
+      - {beat: 9.5, pitch: "D5", beats: 0.25}
+      - {beat: 9.75, pitch: "F5", beats: 0.25}
+      - {beat: 10, pitch: "B3", beats: 0.25}
+      - {beat: 10.25, pitch: "D4", beats: 0.25}
+      - {beat: 10.5, pitch: "G4", beats: 0.25}
+      - {beat: 10.75, pitch: "D5", beats: 0.25}
+      - {beat: 11, pitch: "F5", beats: 0.25}
+      - {beat: 11.25, pitch: "G4", beats: 0.25}
+      - {beat: 11.5, pitch: "D5", beats: 0.25}
+      - {beat: 11.75, pitch: "F5", beats: 0.25}
+      - {beat: 12, pitch: "C4", beats: 0.25}
+      - {beat: 12.25, pitch: "E4", beats: 0.25}
+      - {beat: 12.5, pitch: "G4", beats: 0.25}
+      - {beat: 12.75, pitch: "C5", beats: 0.25}
+      - {beat: 13, pitch: "E5", beats: 0.25}
+      - {beat: 13.25, pitch: "G4", beats: 0.25}
+      - {beat: 13.5, pitch: "C5", beats: 0.25}
+      - {beat: 13.75, pitch: "E5", beats: 0.25}
+      - {beat: 14, pitch: "C4", beats: 0.25}
+      - {beat: 14.25, pitch: "E4", beats: 0.25}
+      - {beat: 14.5, pitch: "G4", beats: 0.25}
+      - {beat: 14.75, pitch: "C5", beats: 0.25}
+      - {beat: 15, pitch: "E5", beats: 0.25}
+      - {beat: 15.25, pitch: "G4", beats: 0.25}
+      - {beat: 15.5, pitch: "C5", beats: 0.25}
+      - {beat: 15.75, pitch: "E5", beats: 0.25}
 
   triangle:
     enabled: true
-    volume: 0.65
+    volume: 0.7
     notes:
-      # Bass line (root notes)
-      - {time: 0.0, pitch: "C2", duration: 2.4}
-      - {time: 2.4, pitch: "D2", duration: 2.4}
-      - {time: 4.8, pitch: "G2", duration: 2.4}
-      - {time: 7.2, pitch: "C2", duration: 2.4}
+      - {beat: 0, pitch: "C2", beats: 4.0}
+      - {beat: 4, pitch: "C2", beats: 4.0}
+      - {beat: 8, pitch: "B1", beats: 4.0}
+      - {beat: 12, pitch: "C2", beats: 4.0}

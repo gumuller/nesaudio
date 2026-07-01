@@ -11,9 +11,12 @@ from .channels import ChannelManager
 from .mixer import Mixer
 from .spectrum import SpectrumAnalyzer
 from .recorder import Recorder
+from .scheduler import EventScheduler
 from ..config import SAMPLE_RATE, BUFFER_SIZE
 
 logger = logging.getLogger(__name__)
+
+_CHANNEL_NAMES = ["pulse1", "pulse2", "triangle", "noise", "dmc"]
 
 
 class AudioEngine:
@@ -25,9 +28,14 @@ class AudioEngine:
 
         # Audio components
         self.channels = ChannelManager(sample_rate)
-        self.mixer = Mixer(master_volume=0.7)
+        self.mixer = Mixer(master_volume=0.7, sample_rate=sample_rate)
         self.spectrum = SpectrumAnalyzer(sample_rate)
         self.recorder = Recorder(sample_rate)
+
+        # Sample-accurate song playback (driven from the audio callback).
+        self.scheduler = EventScheduler(sample_rate)
+        self.sample_position = 0
+        self.paused = False
 
         # Audio stream
         self.stream: Optional[sd.OutputStream] = None
@@ -85,31 +93,12 @@ class AudioEngine:
 
         try:
             with self.lock:
-                # Generate audio from all channels
-                pulse1_out = self.channels.pulse1.generate(frames)
-                pulse2_out = self.channels.pulse2.generate(frames)
-                triangle_out = self.channels.triangle.generate(frames)
-                noise_out = self.channels.noise.generate(frames)
-                dmc_out = self.channels.dmc.generate(frames)
-
-                # Ensure all outputs are exactly the right length
-                def ensure_length(arr, length):
-                    if len(arr) > length:
-                        return arr[:length]
-                    elif len(arr) < length:
-                        return np.pad(arr, (0, length - len(arr)), mode='constant')
-                    return arr
-
-                pulse1_out = ensure_length(pulse1_out, frames)
-                pulse2_out = ensure_length(pulse2_out, frames)
-                triangle_out = ensure_length(triangle_out, frames)
-                noise_out = ensure_length(noise_out, frames)
-                dmc_out = ensure_length(dmc_out, frames)
-
-                # Mix all channels
-                channel_outputs = [pulse1_out, pulse2_out, triangle_out, noise_out, dmc_out]
-                channel_names = ["pulse1", "pulse2", "triangle", "noise", "dmc"]
-                mixed = self.mixer.mix(channel_outputs, channel_names)
+                if self.scheduler.playing and not self.paused:
+                    mixed = self._render_song_block(frames)
+                elif self.paused:
+                    mixed = np.zeros(frames, dtype=np.float32)
+                else:
+                    mixed = self._render_freeplay_block(frames)
 
                 # Ensure mixed output is exactly frames length
                 if len(mixed) > frames:
@@ -130,6 +119,94 @@ class AudioEngine:
         except Exception as e:
             logger.exception("Error in audio callback: %s", e)
             outdata.fill(0)
+
+    def _render_freeplay_block(self, frames: int) -> np.ndarray:
+        """Render a block in interactive (keyboard/effects) mode."""
+        outputs = [ch.generate(frames) for ch in self.channels.channels]
+        return self.mixer.mix(outputs, _CHANNEL_NAMES)
+
+    def _render_song_block(self, frames: int) -> np.ndarray:
+        """
+        Render a block during song playback, splitting it at event boundaries so
+        every note onset lands on its exact sample.
+        """
+        outputs = {name: np.zeros(frames, dtype=np.float32) for name in _CHANNEL_NAMES}
+        block_start = self.sample_position
+        cursor = block_start
+        written = 0
+
+        while written < frames:
+            self.scheduler.apply_due(cursor, self.channels)
+
+            next_sample = self.scheduler.peek_next_sample()
+            if next_sample is None or next_sample >= block_start + frames:
+                segment = frames - written
+            else:
+                segment = min(frames - written, max(1, next_sample - cursor))
+
+            for channel, name in zip(self.channels.channels, _CHANNEL_NAMES):
+                outputs[name][written:written + segment] = channel.generate(segment)
+
+            cursor += segment
+            written += segment
+
+        mixed = self.mixer.mix([outputs[name] for name in _CHANNEL_NAMES], _CHANNEL_NAMES)
+        self.sample_position += frames
+
+        # End-of-song / loop handling at block granularity.
+        if self.sample_position >= self.scheduler.total_samples:
+            if self.scheduler.loop:
+                self.sample_position = 0
+                self.scheduler.reset_index()
+                self.channels.reset_all()
+                self.mixer.reset()
+            else:
+                self.scheduler.stop()
+
+        return mixed
+
+    # -- Song playback control ---------------------------------------------
+
+    def load_song(self, song):
+        """Load a parsed Song for sample-accurate playback."""
+        with self.lock:
+            self.scheduler.load_song(song)
+            self.sample_position = 0
+
+    def play_song(self, loop: bool = False):
+        """Start song playback from the beginning."""
+        with self.lock:
+            self.channels.reset_all()
+            self.mixer.reset()
+            self.sample_position = 0
+            self.paused = False
+            self.scheduler.start(loop)
+
+    def stop_song(self):
+        """Stop song playback and silence all channels."""
+        with self.lock:
+            self.scheduler.stop()
+            self.paused = False
+            self.channels.reset_all()
+
+    def pause_song(self):
+        with self.lock:
+            self.paused = True
+
+    def resume_song(self):
+        with self.lock:
+            self.paused = False
+
+    def is_song_playing(self) -> bool:
+        return self.scheduler.playing
+
+    def get_song_time(self) -> float:
+        return self.sample_position / self.sample_rate
+
+    def get_song_progress(self) -> float:
+        if self.scheduler.total_samples <= 0:
+            return 0.0
+        return min(self.sample_position / self.scheduler.total_samples, 1.0)
 
     def set_update_callback(self, callback: Callable):
         """Set callback for UI updates (called from audio thread)"""

@@ -78,6 +78,47 @@ Use scientific pitch notation:
 - Rest: "REST"
 - Frequency: Direct Hz value (e.g., 440.0)
 
+## Timing: seconds or the tempo grid
+
+Each note/event may be positioned and sized in **either** of two ways, and the
+two styles can be mixed freely within a file:
+
+| Field | Meaning | Unit |
+|-------|---------|------|
+| `time` | Start position | seconds |
+| `duration` | Length | seconds |
+| `beat` | Start position | beats (converted with `tempo`) |
+| `beats` | Length | beats (converted with `tempo`) |
+
+Beat values are converted to seconds using the song `tempo` (BPM), where one
+beat = `60 / tempo` seconds. Writing on the beat grid keeps a piece locked to
+its true tempo and is the recommended way to transcribe music:
+
+```yaml
+tempo: 100          # 1 beat = 0.6 s
+channels:
+  pulse1:
+    duty_cycle: 0.5
+    notes:
+      # A quarter note on beat 0, an eighth note on beat 1, etc.
+      - {beat: 0.0, pitch: "E5", beats: 1.0}
+      - {beat: 1.0, pitch: "C5", beats: 0.5}
+      - {beat: 1.5, pitch: "G5", beats: 0.5}
+```
+
+If both `time` and `beat` are present, `time` wins; likewise `duration` takes
+precedence over `beats`. Files that only use `time`/`duration` keep working
+unchanged.
+
+## Reproduction accuracy
+
+Playback is sample-accurate: note events are triggered inside the audio
+callback by sample index, so onsets are not quantized to the UI frame rate.
+Pitches are snapped to the NES 11-bit timer, pulse waves are band-limited, the
+triangle uses the 16-level staircase, noise uses the hardware LFSR + period
+table, and the channels are combined with the console's non-linear mixer and
+analog filter chain.
+
 ## Examples
 
 See the `music/` directory for complete examples.

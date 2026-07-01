@@ -9,7 +9,7 @@ channels:
   pulse1:
     enabled: true
     duty_cycle: 0.25
-    volume: 0.8
+    volume: 0.85
     notes:
       # Opening riff: E-E-F#-G-G-F#-E-D-E
       - {time: 0.0, pitch: "E5", duration: 0.2}
@@ -103,7 +103,7 @@ channels:
 
   triangle:
     enabled: true
-    volume: 0.75
+    volume: 0.7
     notes:
       # Fast bass line
       - {time: 0.0, pitch: "C2", duration: 0.3}

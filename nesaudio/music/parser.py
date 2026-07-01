@@ -125,6 +125,9 @@ class NAUParser:
         if 'samples' in data:
             song.samples = self._parse_samples(data['samples'])
 
+        # Seconds per beat, used to convert beat-grid note positions/durations.
+        seconds_per_beat = 60.0 / song.tempo if song.tempo else 0.5
+
         # Parse channels
         if 'channels' in data:
             channels_data = data['channels']
@@ -134,7 +137,8 @@ class NAUParser:
                 if channel_name in channels_data:
                     song.channels[channel_name] = self._parse_channel(
                         channels_data[channel_name],
-                        channel_name
+                        channel_name,
+                        seconds_per_beat
                     )
 
         # Recalculate duration after all channels are parsed
@@ -154,8 +158,14 @@ class NAUParser:
 
         return song
 
-    def _parse_channel(self, channel_data: Dict[str, Any], channel_name: str) -> ChannelData:
-        """Parse channel data"""
+    def _parse_channel(self, channel_data: Dict[str, Any], channel_name: str,
+                       seconds_per_beat: float = 0.5) -> ChannelData:
+        """Parse channel data.
+
+        Note timing may be given either in seconds (``time``/``duration``) or on
+        the tempo grid in beats (``beat``/``beats``); the two forms may be mixed
+        freely and beat values are converted using ``seconds_per_beat``.
+        """
         channel = ChannelData(
             enabled=channel_data.get('enabled', True),
             volume=channel_data.get('volume', 0.8)
@@ -172,9 +182,9 @@ class NAUParser:
         if 'notes' in channel_data and channel_name != 'noise':
             for note_data in channel_data['notes']:
                 note = Note(
-                    time=note_data.get('time', 0.0),
+                    time=self._resolve_time(note_data, seconds_per_beat),
                     pitch=note_data.get('pitch', 'C4'),
-                    duration=note_data.get('duration', 0.5),
+                    duration=self._resolve_duration(note_data, seconds_per_beat, 0.5),
                     volume=note_data.get('volume', 1.0)
                 )
                 channel.notes.append(note)
@@ -183,9 +193,9 @@ class NAUParser:
         if channel_name == 'noise' and 'notes' in channel_data:
             for note_data in channel_data['notes']:
                 noise_note = NoiseNote(
-                    time=note_data.get('time', 0.0),
+                    time=self._resolve_time(note_data, seconds_per_beat),
                     period=note_data.get('period', 8),
-                    duration=note_data.get('duration', 0.1),
+                    duration=self._resolve_duration(note_data, seconds_per_beat, 0.1),
                     volume=note_data.get('volume', 1.0)
                 )
                 channel.noise_notes.append(noise_note)
@@ -194,14 +204,33 @@ class NAUParser:
         if channel_name == 'dmc' and 'samples' in channel_data:
             for sample_data in channel_data['samples']:
                 dmc_sample = DMCSample(
-                    time=sample_data.get('time', 0.0),
+                    time=self._resolve_time(sample_data, seconds_per_beat),
                     sample_id=sample_data.get('sample_id', 'default'),
-                    duration=sample_data.get('duration', 0.2),
+                    duration=self._resolve_duration(sample_data, seconds_per_beat, 0.2),
                     volume=sample_data.get('volume', 1.0)
                 )
                 channel.dmc_samples.append(dmc_sample)
 
         return channel
+
+    @staticmethod
+    def _resolve_time(event: Dict[str, Any], seconds_per_beat: float) -> float:
+        """Return an event start time in seconds from ``time`` or ``beat``."""
+        if 'time' in event:
+            return float(event['time'])
+        if 'beat' in event:
+            return float(event['beat']) * seconds_per_beat
+        return 0.0
+
+    @staticmethod
+    def _resolve_duration(event: Dict[str, Any], seconds_per_beat: float,
+                          default: float) -> float:
+        """Return an event duration in seconds from ``duration`` or ``beats``."""
+        if 'duration' in event:
+            return float(event['duration'])
+        if 'beats' in event:
+            return float(event['beats']) * seconds_per_beat
+        return default
 
     def _parse_samples(self, samples_data: Dict[str, Any]) -> Dict[str, List[float]]:
         """Parse sample definitions"""
